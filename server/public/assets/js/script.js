@@ -1,0 +1,2 @@
+const translateVertical=t=>{[...document.querySelectorAll(".translate-y")].forEach((e=>{const a=e.dataset.speed,n=t*a*5;e.style.transform=`translateY(${n}px)`}))},translateHorizontal=t=>{[...document.querySelectorAll(".translate-x")].forEach((e=>{const a=e.dataset.speed,n=t*a*5;e.style.transform=`translateX(${n}px)`}))};document.addEventListener("scroll",(function(){const t=window.pageYOffset||document.documentElement.scrollTop;translateVertical(t),translateHorizontal(t)}));
+//# sourceMappingURL=script.js.map

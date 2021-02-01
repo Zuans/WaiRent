@@ -1,0 +1,2 @@
+const burgerBtn=document.getElementById("act-nav"),navEl=document.getElementsByTagName("nav")[0];burgerBtn.addEventListener("click",(function(){navEl.classList.contains("nav-active")?navEl.classList.remove("nav-active"):navEl.classList.add("nav-active")}));
+//# sourceMappingURL=navbar.js.map

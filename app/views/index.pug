@@ -1,0 +1,91 @@
+extends layout/body.pug
+  
+block append styles
+    link(rel="stylesheet", href=`${baseAssets}/css/style.css`)
+
+
+block content
+    section#jumbotron  
+        div.caption
+            h1.transalate-x(data-speed = "-0.6") Get your waifu here
+            h3.translate-x(data-speed = "-0.45") Lets rent your waifu or top waifu in WaiRent
+            p.translate-x(data-speed = "-0.3" ) WaiRent is a web for renting waifu this web was created inspired by Kanojo Okarishimasu
+            button.translate-y(data-speed = "0.4") Let's Rent
+        div.img
+            img(src = "../assets/img/Char.png" class="translate-y" data-speed="0.2" alt="" )
+            div.bottom-oval
+    section#waifu  
+        h1.title Top Waifus
+        div.card-wrapper
+            div.waifu-card
+                h2.waifu-card-title Emilia
+                h3.waifu-card-price $8000/hour
+                img( src = `${baseAssets}/img/emilia-removebg-preview.png` class = "waifu-card-img" alt="Emilia Image" )
+                div.waifu-card-content
+                    div.ratings
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    div.tags
+                        p Bakso
+                        p 17th
+                        p Playing
+                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
+                a.btn-detail( href= "#" ) See Detail
+            div.waifu-card
+                h2.waifu-card-title Zero Two
+                h3.waifu-card-price $8000/hour
+                img( src = `${baseAssets}/img/Zero-two.png` class = "waifu-card-img" alt="Emilia Image" )
+                div.waifu-card-content
+                    div.ratings
+                    div.tags
+                        p Bakso
+                        p 17th
+                        p Playing
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
+                a.btn-detail( href= "#" ) See Detail
+            div.waifu-card
+                h2.waifu-card-title Asuna Yuuki
+                h3.waifu-card-price $8000/hour
+                img( src = `${baseAssets}/img/asuna.png` class = "waifu-card-img" alt="Emilia Image" )
+                div.waifu-card-content
+                    div.ratings
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    div.tags
+                        p Bakso
+                        p 17th
+                        p Playing
+                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
+                a.btn-detail( href= "#" ) See Detail
+    section#choose-type
+        div.type-wrapper
+            div.long-hair
+                h1.title-type Long Hair
+            div.short-hair
+                h1.title-type Short Hair
+    section#testimoni
+        h1.testimoni-title What Our Customers Say ?
+        div.testimoni-wrapper
+            div.card.card-test-1
+                img( src="./assets/img/asuna-avatar.jpg" class="user-avatar" alt="avatar-img" )
+                h1.card-title Zuans
+                p.card-desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, quam.
+            div.card.card-test-2
+                img( src="./assets/img/hekkel.jpeg" class="user-avatar" alt="avatar-img" )
+                h1.card-title Onanimous
+                p.card-desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, quam.
+            div.card.card-test-3
+                img( src="" class="user-avatar" alt="avatar-img" )
+                h1.card-title Zuans
+                p.card-desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, quam.

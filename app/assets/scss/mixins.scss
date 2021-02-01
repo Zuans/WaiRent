@@ -1,0 +1,31 @@
+
+@import './variables.scss';
+
+@mixin font-scale($font-size){
+    @media (min-width : #{$size-mobile}) {
+        font-size : calc(#{$font-size} * #{$font-scale-mobile});
+    }
+    @media (min-width : #{$size-tablet}) {
+        font-size : calc(#{$font-size} * #{$font-scale-tablet});
+    }
+    @media (min-width : #{$size-desktop}) {
+        font-size : calc(#{$font-size} * #{$font-scale-desktop});
+    }
+}
+
+
+@mixin respond($device) {
+    @if $device == 'mobile' {
+        @media (min-width : #{$size-mobile}) and (max-width : #{$size-tablet}) {
+            @content
+        }
+    } @else if $device == 'tablet' {
+        @media (min-width : #{$size-tablet}) and (max-width : #{$size-desktop }) {
+            @content
+        }
+    } @else {
+        @media (min-width : #{$size-desktop}) {
+            @content
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "test-gulp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browser-sync": "^2.26.13",
+    "cors": "^2.8.5",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^9.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-terser": "^2.0.1",
+    "install": "^0.13.0",
+    "livereload": "^0.9.1",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.6.1",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "node server/src/app.js",
+    "watch" : "nodemon server/src/app.js  -e js,pug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

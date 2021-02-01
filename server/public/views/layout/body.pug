@@ -1,0 +1,21 @@
+- var baseAssets = '../assets'
+
+doctype html
+html
+    head
+        meta( charset="UTF-8" )
+        meta( name="viewport" content="width=device-width,initial-scale=1.0" )
+        title WaiRent | #{title}
+        block scripts
+            script( src="https://kit.fontawesome.com/f40c32a411.js" crossorigin="anonymous" )
+
+        block styles
+            link(rel="stylesheet", href=`${baseAssets}/css/navbar.css`)
+            link(rel="stylesheet", href=`${baseAssets}/css/footer.css`)
+
+    body
+        include navbar.pug
+        block content
+        include footer.pug
+        block endScripts
+            script( src=`${baseAssets}/js/navbar.js`)

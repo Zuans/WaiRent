@@ -1,0 +1,2 @@
+const minPriceEl=document.getElementById("waifu-min-price"),minPriceTxt=document.getElementById("waifu-min-price-txt"),maxPriceEl=document.getElementById("waifu-max-price"),maxPriceTxt=document.getElementById("waifu-max-price-txt");let minPriceVal=null;minPriceEl.addEventListener("change",(function(e){const t=1e3*this.value,n=`Rp.${t}`;minPriceTxt.textContent=n,minPriceVal=t})),console.log(maxPriceEl),maxPriceEl.addEventListener("change",(function(e){const t=1e3*this.value,n=`Rp.${t}`;maxPriceTxt.textContent=n,maxPriceVal=t}));
+//# sourceMappingURL=waifu-all.js.map
