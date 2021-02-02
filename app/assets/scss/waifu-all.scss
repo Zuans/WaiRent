@@ -14,25 +14,50 @@
 
 
 
+
+
 #waifus-wrapper {
     display: flex;
     width: 100%;
     height: auto;
-    min-height: 100vh;
     background-color : #f3f3f3;
     color : #303030;
+
+    .switch-wrapper {
+        position: absolute;
+        right: .5rem;
+        top : 6rem;
+        z-index: 99;
+
+        button {
+            padding : .5rem 1rem;
+            color : white;
+            border-radius : 5px;
+            background-color :#6294f0;
+            cursor: pointer;
+        }
+    }
 
     .title-content {
         @include font-scale(2.3rem)
     }
 
+    .waifu-filter-active {
+        display: block !important;
+        height : auto !important;
+    }
+
     .waifu-filter {
+        position: relative;
         flex : 0 0 20%;
         padding : 2rem 1rem;
+        height: auto;
         background-color : #F06292;
         @include respond('mobile') {
+            height : 0px;
             display: none;
         }
+        transition : all .5s ease;
 
         .title-content {
             @include font-scale(2.3rem);
@@ -137,18 +162,6 @@
             text-align : center;
         }
 
-        .switch-wrapper {
-            position: absolute;
-            right: .5rem;
-            top : 2.1rem;
-
-            button {
-                padding : .5rem 1rem;
-                color : white;
-                border-radius : 5px;
-                background-color :#6294f0;
-            }
-        }
 
         .waifu-card-wrapper {
             display: flex;
