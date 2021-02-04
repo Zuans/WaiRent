@@ -24,14 +24,24 @@
     color : #303030;
 
     .switch-wrapper {
+        @include respond('tablet') {
+            visibility: hidden;
+        }
+
+        @include respond('desktop') {
+            visibility: hidden;
+        }
+
         position: absolute;
         right: .5rem;
         top : 6rem;
-        z-index: 99;
+        z-index: 3;
 
         button {
             padding : .5rem 1rem;
             color : white;
+            font-weight : 500;
+            font-size : 1.2rem;
             border-radius : 5px;
             background-color :#6294f0;
             cursor: pointer;
@@ -153,7 +163,11 @@
     .waifu-all {
         position : relative;
         flex : 1 0 80%;
-        width: 100%;
+        @include respond('mobile') {
+            width: 100%;
+            flex : 1 0 100%;
+        }
+        width: auto;
         display: flex;
         padding : 2rem 1.25rem;
         flex-direction: column;
@@ -166,8 +180,8 @@
         .waifu-card-wrapper {
             display: flex;
             flex-wrap: wrap;
-            width: 100%;
-            margin : 2rem 0rem;
+            width: auto;
+            margin : 2rem .5rem;
             justify-content : space-around;
 
 
