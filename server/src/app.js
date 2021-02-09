@@ -8,8 +8,15 @@ require('dotenv').config();
 const app = express();
 const PORT =  process.env.PORT || 8000;
 
+// Middleware Func
+const errorMiddleware = require('./middleware/error.middleware');
+
 // Route File Import
 const waifuRoute = require('./routes/waifuRoutes');
+const userRoute = require('./routes/userRoutes');
+const dateTimeRoute = require('./routes/dateTimeRoutes');
+const hairTypeRoute = require('./routes/hairTypeRoutes');
+
 
 app.set('views',path.join(__dirname,'../public/views'));
 app.set('view engine', 'pug');
@@ -51,6 +58,16 @@ app.get('/test',(req,res) => {
 });
 
 app.use('/waifu',waifuRoute);
+
+app.use('/user',userRoute);
+app.use('/date-time',dateTimeRoute);
+app.use('/hair-type',hairTypeRoute);
+// app.use('/hobby',hobbyRoute);
+
+
+
+app.use(errorMiddleware);
+
 
 app.listen(PORT,() => {
     console.log(`Server running on port ${PORT}`);

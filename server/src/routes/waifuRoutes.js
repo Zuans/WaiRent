@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
+const WaifuController = require('../controller/waifu.controller');
+const awaitHandleFactory = require('../middleware/awaitHandlerFactory.middleware');
+const auth = require('../middleware/auth.middleware');
 
-router.get('/detail',(req,res) => {
-    res.render('routes/waifu-detail',{
-        title : 'Waifu Detail'
-    });
-});
 
-router.get('/all',(req,res) => {
-    res.render('routes/waifu-all',{
-        title : 'All Waifu'
-    });
-})
+router.get('/',WaifuController.all);
+
+router.get('/:id',WaifuController.detail);
+
+router.post('/',awaitHandleFactory(WaifuController.create));
+
+router.delete('/:id',WaifuController.delete);
+
+router.patch('/:id',WaifuController.update);
 
 
 module.exports = router;
