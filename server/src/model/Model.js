@@ -58,6 +58,7 @@ class BaseModel {
         const idColVal = Object.values(id)[0];
         const sql = `DELETE FROM ${this.tableName} WHERE ${idColName} = ?`;
         const result = await query(sql,[idColVal]);
+        console.log(result);
         const affectedRows = result.affectedRows;
         return affectedRows;
     }

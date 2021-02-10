@@ -1,35 +1,42 @@
+// Utils
 const query = require('../db/conn');
 const { multipleColumnSet } = require('../utils/common.utils');
 
-class WaifuModel {
+// Base Model Class
+const BaseModel = require('../model/Model');
+
+class WaifuModel extends BaseModel {
 
     constructor() {
-        this.tableName = 'waifus';
+        const tableName = 'waifus';
+        super(tableName);
     }
 
-    async find( params = {} ) {
-        let sql = `SELECT * FROM ${this.tableName}`;
+    async find(params = {}) {
+        let sql = `SELECT waifus.*, FLOOR(total_rating / count_rating) AS ratings FROM waifus;`
         if(!Object.keys(params).length) {
             return await query(sql);
         }
+
         const { columnSet,values } = multipleColumnSet(params);
         sql += ` WHERE ${columnSet}`;
         const result = await query(sql,[...values]);
         return result;
     }
 
+
     async findOne(params = {}) {
-        let sql = `SELECT * FROM ${this.tableName}`;
-        if(!Object.keys(params).length) {
+        let sql = `SELECT waifus.*, FLOOR(total_rating / count_rating) AS ratings FROM waifus`;
+        if(Object.keys(params).length) {
             const result = await query(sql);
             return result[0];
         }
-
-        const { columnSet,values } = multipleColumnSet(params);
+        const {columnSet,values} = multipleColumnSet(params);
         sql += ` WHERE ${columnSet}`;
         const result = await query(sql,[...values]);
         return result[0];
     }
+
 
     async create({
         name,
@@ -47,20 +54,15 @@ class WaifuModel {
         return affectedRows;
     }
 
-    async update(params,id) {
-        const { columnSet,values } = multipleColumnSet(params);
-        const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
-        const result = await query(sql,[...values,id]);
-        const affectedRows =  result.affectedRows;
-        return affectedRows;
-    }
-
-    async delete(id) {
-        const sql = `DELETE FROM ${this.tableName} WHERE id = ?`;
-        const result = await query(sql,[id]);
+    async incRating({rating},id) {
+        const waifu_id = parseInt(id);
+        const sql = `UPDATE ${this.tableName} SET total_rating = total_rating + ?, count_rating = count_rating + 1 WHERE waifu_id = ?`;
+        console.log(sql);
+        const result = await query(sql,[rating,waifu_id]);
         const affectedRows = result.affectedRows;
         return affectedRows;
     }
+
 }
 
 module.exports = new WaifuModel;

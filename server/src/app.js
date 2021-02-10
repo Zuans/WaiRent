@@ -12,11 +12,10 @@ const PORT =  process.env.PORT || 8000;
 const errorMiddleware = require('./middleware/error.middleware');
 
 // Route File Import
-const waifuRoute = require('./routes/waifuRoutes');
-const userRoute = require('./routes/userRoutes');
-const dateTimeRoute = require('./routes/dateTimeRoutes');
-const hairTypeRoute = require('./routes/hairTypeRoutes');
-
+const ApiRoutes = require('./routes/api_v1/ApiRoutes');
+// Router page import
+const homeRoutes = require('./routes/page/homeRoutes');
+const waifuRoutes = require('./routes/page/waifuRoutes');
 
 app.set('views',path.join(__dirname,'../public/views'));
 app.set('view engine', 'pug');
@@ -53,16 +52,9 @@ app.get('/',(req,res) => {
     });
 })
 
-app.get('/test',(req,res) => {
-    // res.send('route work');
-});
-
-app.use('/waifu',waifuRoute);
-
-app.use('/user',userRoute);
-app.use('/date-time',dateTimeRoute);
-app.use('/hair-type',hairTypeRoute);
 // app.use('/hobby',hobbyRoute);
+app.use('/api/wairent/v1',ApiRoutes);
+app.use('/waifu',waifuRoutes);
 
 
 
