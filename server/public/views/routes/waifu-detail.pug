@@ -8,19 +8,20 @@ block append styles
 block content
     section#content
         div.waifu-title-wrapper
-            h1.waifu-name-title Waifu information
-            div.icon-wrapper
-                ul
-                    li.icon-sosmed 
-                        i.fab.fa-twitter
-                    li.icon-sosmed
-                        i.fab.fa-instagram
-                    li.icon-sosmed
-                        i.fab.fa-facebook-f
+            h1.waifu-name-title #{detailWaifu['name']}
+            h1.waifu-content-title Waifu information
         div.waifu-detail-wrapper 
             div.img-wrapper
                 img.waifu-img(src = `${baseAssets}/img/asuna.png`, alt="#" )
                 h2.waifu-price Rp.20000/hour
+                div.icon-wrapper
+                    ul
+                        li.icon-sosmed 
+                            i.fab.fa-twitter
+                        li.icon-sosmed
+                            i.fab.fa-instagram
+                        li.icon-sosmed
+                            i.fab.fa-facebook-f
             div.info-wrapper
                 div.info-title 
                     span.title-name Informasi tentang

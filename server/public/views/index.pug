@@ -7,8 +7,9 @@ block append styles
 block content
     section#jumbotron  
         div.caption
-            h1.transalate-x(data-speed = "-0.6") Get your waifu here
-            h3.translate-x(data-speed = "-0.45") Lets rent your waifu or top waifu in WaiRent
+            | <h1 class="translate-x" data-speed = "-0.6"><strong class="brand-title" >Wairent </strong> Get your in wairent </h1>     
+            | <h3 class="translate-x" data-speed = "-0.45"> Lets rent your waifu or top waifu in <strong class="brand-title" >Wairent,</strong> </h3>          
+            //- h3.translate-x(data-speed = "-0.45") Lets rent your waifu or top waifu in WaiRent
             p.translate-x(data-speed = "-0.3" ) WaiRent is a web for renting waifu this web was created inspired by Kanojo Okarishimasu
             button.translate-y(data-speed = "0.4") Let's Rent
         div.img
@@ -59,3 +60,5 @@ block content
                 img( src="" class="user-avatar" alt="avatar-img" )
                 h1.card-title Zuans
                 p.card-desc Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, quam.
+block append endScripts
+    script( src=`${baseAssets}/js/script.js`)
