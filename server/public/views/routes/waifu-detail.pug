@@ -1,4 +1,48 @@
 extends ../layout/body.pug
 
+block append styles
+    link(rel="stylesheet", href=`${baseAssets}/css/waifu-detail.css`)
+
+
+
 block content
-    h1 Ini Adalah halaman semua waifu
+    section#content
+        div.waifu-title-wrapper
+            h1.waifu-name-title Waifu information
+            div.icon-wrapper
+                ul
+                    li.icon-sosmed 
+                        i.fab.fa-twitter
+                    li.icon-sosmed
+                        i.fab.fa-instagram
+                    li.icon-sosmed
+                        i.fab.fa-facebook-f
+        div.waifu-detail-wrapper 
+            div.img-wrapper
+                img.waifu-img(src = `${baseAssets}/img/asuna.png`, alt="#" )
+                h2.waifu-price Rp.20000/hour
+            div.info-wrapper
+                div.info-title 
+                    span.title-name Informasi tentang
+                    span.waifu-name #{detailWaifu['name']}
+                div.info-item
+                    span.info-name Rating:
+                    span.info-value #{detailWaifu['ratings']} / 5
+                div.info-item
+                    span.info-name Hair type:
+                    span.info-value #{detailWaifu['hair_type']}
+                div.info-item
+                    span.info-name Date time:
+                    span.info-value #{detailWaifu['date_time']}
+                div.info-item
+                    span.info-name Hobby:
+                    span.info-value #{detailWaifu['hobby']}
+                div.info-item
+                    span.info-name Another hobby:
+                    span.info-value #{detailWaifu['hobby_2']}
+                div.info-desc
+                    p.desc-title Description
+                    p.desc-content #{detailWaifu['description']}
+                //- h2.waifu-price Rp.20000/hour
+                button.btn-rent 
+                    a( href=`/waifu/rent/${detailWaifu['waifu_id']}`) Rent now !       

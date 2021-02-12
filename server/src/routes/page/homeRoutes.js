@@ -1,13 +1,15 @@
-const express = require('express');
-const router = express.Router();
-
-router.get('/',(req,res) => {
-    res.send('awdwad');
-})
-
-router.get('/test',(req,res) => {
-    res.send('awdawdawd');
-}) 
+const waifuModel = require('../../model/waifu.model');
 
 
-module.exports = router;
+
+const index  = async (req,res) => {  
+    const titlePage = 'Home';
+    const topWaifu = await waifuModel.findTopRating(3);
+    return res.render('index',{
+        title : titlePage,
+        topWaifu : topWaifu
+    });
+}
+
+
+module.exports = index;

@@ -18,5 +18,7 @@ router.delete('/:id',WaifuController.delete);
 
 router.patch('/:id',WaifuController.update);
 
+router.get('/rating/top',WaifuController.topRating);
+
 
 module.exports = router;

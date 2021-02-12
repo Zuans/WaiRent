@@ -61,33 +61,7 @@ class WaifuController {
         });
     }
 
-    // Method For Pages
-
-    async showAll(req,res) {
-        const allWaifu = await waifuModel.find();
-        if(!allWaifu) {
-            return sendResponsesEmpty();
-        }
-        res.render('routes/waifu-all',{
-            title : 'All Waifu',
-            allWaifu,
-        });
-    }
-
-    async showDetail(req,res) {
-        const id = {
-            waifu_id : req.params.id,
-        }
-        const detailWaifu = await waifuModel.find(id);
-        if(!detailWaifu) {
-            return sendResponsesEmpty();
-        }
-        res.render('routes/waifu-all',{
-            title : 'All Waifu',
-            detailWaifu,
-        });
-    }
-
+    
     async setRating(req,res) {
         const id = req.params.id;
         const increased = await waifuModel.incRating(req.body,id);
@@ -96,6 +70,44 @@ class WaifuController {
         };
 
         return sendResponses(res,null,'Waifu Rating has increased!');
+    }
+    
+    async topRating(req,res) {
+        const topRating  = await waifuModel.findTopRating();
+        return sendResponses(res,topRating,'success get all top rating');
+    }
+    // Method For Pages
+
+    async showAll(req,res) {
+        const allWaifu = await waifuModel.find();
+        if(!allWaifu) {
+            return res.render('routes/waifu-all',{
+                title : 'All Waifu',
+                allWaifu : null
+            })
+        }
+        res.render('routes/waifu-all',{
+            title : 'All Waifu',
+            allWaifu : null,
+        });
+    }
+
+    async showDetail(req,res) {
+        const id = {
+            waifu_id : req.params.id,
+        }
+        const detailWaifu = await waifuModel.findById(id);
+        console.log('slow responses');
+        if(!detailWaifu) {
+            return res.render('routes/waifu-detail',{
+                title : 'Detail waifu',
+                detailWaifu : null,
+            });
+        }
+        res.render('routes/waifu-detail',{
+            title : 'Detail waifu',
+            detailWaifu,
+        });
     }
 
 }

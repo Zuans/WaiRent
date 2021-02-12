@@ -16,59 +16,28 @@ block content
             div.bottom-oval
     section#waifu  
         h1.title Top Waifus
-        div.card-wrapper
-            div.waifu-card
-                h2.waifu-card-title Emilia
-                h3.waifu-card-price $8000/hour
-                img( src = `${baseAssets}/img/emilia-removebg-preview.png` class = "waifu-card-img" alt="Emilia Image" )
-                div.waifu-card-content
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p Bakso
-                        p 17th
-                        p Playing
-                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
-                a.btn-detail( href= "#" ) See Detail
-            div.waifu-card
-                h2.waifu-card-title Zero Two
-                h3.waifu-card-price $8000/hour
-                img( src = `${baseAssets}/img/Zero-two.png` class = "waifu-card-img" alt="Emilia Image" )
-                div.waifu-card-content
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p Bakso
-                        p 17th
-                        p Playing
-   
-                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
-                a.btn-detail( href= "#" ) See Detail
-            div.waifu-card
-                h2.waifu-card-title Asuna Yuuki
-                h3.waifu-card-price $8000/hour
-                img( src = `${baseAssets}/img/asuna.png` class = "waifu-card-img" alt="Emilia Image" )
-                div.waifu-card-content
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p Bakso
-                        p 17th
-                        p Playing
-                    p.waifu-desc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, ratione!
-                a.btn-detail( href= "#" ) See Detail
+        if !topWaifu
+            div.alert-wrapper
+                h3.alert-danger No data avaible
+        else 
+            div.card-wrapper
+                each waifu in topWaifu
+                    div.waifu-card
+                        h2.waifu-card-title #{waifu['name']}
+                        h3.waifu-card-price $8000/hour
+                        img( src = `${baseAssets}/img/emilia-removebg-preview.png` class = "waifu-card-img" alt="Emilia Image" )
+                        div.waifu-card-content
+                            div.ratings
+                                - var ratingIndex = 0;
+                                while ratingIndex <= waifu['ratings']
+                                    i.fas.fa-star( data-index = `${ratingIndex++}` )
+                            div.tags
+                                p #{waifu['date_time']}
+                                p #{waifu['hair_type']}
+                                p #{waifu['hobby']}
+                                p #{waifu['hobby_2']}
+                            p.waifu-desc #{waifu['description']}
+                        a.btn-detail( href= `/waifu/${waifu['waifu_id']}` ) See Detail
     section#choose-type
         div.type-wrapper
             div.long-hair

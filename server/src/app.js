@@ -45,12 +45,7 @@ if( process.env.NODE_ENV == 'development' ) {
 
 
 
-app.get('/',(req,res) => {  
-    const titlePage = 'Home';
-    return res.render('index',{
-        title : titlePage,
-    });
-})
+app.get('/',homeRoutes);
 
 // app.use('/hobby',hobbyRoute);
 app.use('/api/wairent/v1',ApiRoutes);

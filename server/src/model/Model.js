@@ -34,7 +34,6 @@ class BaseModel {
     async findById(id) {
         const idColName = Object.keys(id)[0];
         const idColVal = Object.values(id)[0];
-        console.log(idColName,idColVal);
         const sql = `SELECT * FROM ${this.tableName} WHERE ${idColName} = ?`;
         const result = await query(sql,[idColVal]);
         return result[0];
