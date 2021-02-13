@@ -5,6 +5,8 @@ const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middle
 
 router.get('/',awaitHandlerFactory(waifuController.showAll));
 
+router.post('/',awaitHandlerFactory(waifuController.showAll));
+
 router.get('/:id',awaitHandlerFactory(waifuController.showDetail));
 
 

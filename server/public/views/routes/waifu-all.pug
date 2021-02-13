@@ -12,31 +12,43 @@ block content
             hr.breakpoint
             div.form-filter-wrapper
                 h1.title-form Search Name
-                form#filter-form(action="")
+                form#filter-form(action=`${baseURL}/waifu` method="POST" )
                     div.form-group
                         label( for="waifu-name") Name
                         input( type="text" name="waifu-name" id="waifu-name" autocomplete="off")
+                        if errors && errors['waifu-name']
+                            div.error-input
+                                p.error-text #{errors['waifu-name']}
                     div.form-group
                         label( for="waifu-min-age") Min Age
                         input( type="number" name="waifu-min-age" min="10" max="50" id="waifu-min-age")
+                        if errors && errors['waifu-min-age']
+                            div.error-input
+                                p.error-text #{errors['waifu-min-age']}
                     div.form-group
                         label( for="waifu-max-age") Max Age
                         input( type="number" name="waifu-max-age" min="10" max="50" id="waifu-max-age")
+                        if errors && errors['waifu-max-age']
+                            div.error-input
+                                p.error-text #{errors['waifu-max-age']}
                     div.form-group
                         label( for="hair-type") Hair Type
                         select.hair-type#hair-type
-                            option All Type
-                            option Short Hair
-                            option Long Hair
-                            option Twin Tail
-                            option Pig Tail
+                            option( selected ) All Type
+                            each hairType in allHairType
+                                option( value=`${hairType['hair_type_id']}`) #{hairType['name_type']}
+                        if errors && errors['hair-type']
+                            div.error-input
+                                p.error-text #{errors['hair-type']}
                     div.form-group
                         label( for="date-time") Date Time
                         select#date-time
-                            option All Time
-                            option Night
-                            option Morning
-                            option Afternoon
+                            option( selected ) All Time
+                            each dateTime in allDateTime
+                                option( value=`${dateTime['date_time_id']}`) #{dateTime['time']}
+                        if  errors && errors['date-time']
+                            div.error-input
+                                p.error-text #{errors['date-time']}
                     div.form-group
                         label( for="waifu-min-price") Min Price
                         input( type="range" min="0" max="1000" id="waifu-min-price")
@@ -46,100 +58,26 @@ block content
                         input( type="range" min="0" max="1000" id="waifu-max-price")
                         p#waifu-max-price-txt.txt-price
                     div.form-group
-                        button.submit-filter Search
+                        input(type="submit" value="Search" ).submit-filter
         div.waifu-all
             h1.title-content All Waifu
             div.waifu-card-wrapper
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
-                div.waifu-card
-                    img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
-                    h1.waifu-name Asuna Yuuki
-                    h1.waifu-price $8000/hour
-                    div.ratings
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    div.tags
-                        p.tags-item Ayamn
-                        p.tags-item Kecap
-                        p.tags-item Asin
-                    a.waifu-btn-detail( href = "/") See Detail
+                each waifu in allWaifu
+                    div.waifu-card
+                        img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
+                        h1.waifu-name #{waifu['name']}
+                        h1.waifu-price $#{waifu['price']}/hour
+                        div.ratings
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        div.tags
+                            p.tags-item #{waifu['date_time']}
+                            p.tags-item #{waifu['hair_type']}
+                            p.tags-item #{waifu['hobby']}
+                        a.waifu-btn-detail( href = `${baseURL}/waifu/${waifu['waifu_id']}` ) See Detail
 
 block append endScripts
     script( src=`${baseAssets}/js/waifu-all.js`)

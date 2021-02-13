@@ -1,4 +1,8 @@
+// Model
 const waifuModel = require('../model/waifu.model');
+const dateTimeModel = require('../model/dateTime.model');
+const hairTypeModel = require('../model/hairType.model');
+// Utils
 const { sendResponses, sendResponsesEmpty } = require('../utils/common.utils');
 const HttpExeception = require('../utils/HttpExeception.utils');
 
@@ -79,17 +83,26 @@ class WaifuController {
     // Method For Pages
 
     async showAll(req,res) {
-        const allWaifu = await waifuModel.find();
-        if(!allWaifu) {
-            return res.render('routes/waifu-all',{
+        const allDateTime = await dateTimeModel.find();
+        const allHairType = await hairTypeModel.find();
+        console.log('hair');
+        console.log(req.body);
+        if(!req.body.filter) {
+            const allWaifu = await waifuModel.find();
+            if(!allWaifu) {
+                return res.render('routes/waifu-all',{
+                    title : 'All Waifu',
+                    allWaifu : null
+                })
+            }
+            res.render('routes/waifu-all',{
                 title : 'All Waifu',
-                allWaifu : null
-            })
+                allWaifu,
+                allDateTime,
+                allHairType,
+                errors : null
+            });
         }
-        res.render('routes/waifu-all',{
-            title : 'All Waifu',
-            allWaifu : null,
-        });
     }
 
     async showDetail(req,res) {
@@ -97,7 +110,6 @@ class WaifuController {
             waifu_id : req.params.id,
         }
         const detailWaifu = await waifuModel.findById(id);
-        console.log('slow responses');
         if(!detailWaifu) {
             return res.render('routes/waifu-detail',{
                 title : 'Detail waifu',

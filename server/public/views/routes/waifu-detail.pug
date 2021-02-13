@@ -27,8 +27,12 @@ block content
                     span.title-name Informasi tentang
                     span.waifu-name #{detailWaifu['name']}
                 div.info-item
-                    span.info-name Rating:
-                    span.info-value #{detailWaifu['ratings']} / 5
+                    if detailWaifu['ratings'] = 0
+                        span.info-name Rating:
+                        span.info-value 0 / 5
+                    else
+                        span.info-name Rating:
+                        span.info-value #{detailWaifu['ratings']} / 5
                 div.info-item
                     span.info-name Hair type:
                     span.info-value #{detailWaifu['hair_type']}
