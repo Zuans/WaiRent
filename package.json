@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
     "browser-sync": "^2.26.13",
     "cors": "^2.8.5",
     "cssnano": "^4.1.10",
