@@ -61,6 +61,18 @@ class BaseModel {
         const affectedRows = result.affectedRows;
         return affectedRows;
     }
+
+    queryRange(columnName,paramsObj)  {
+        const columnSet = ` ${columnName} IN( SELECT ${columnName} FROM ${this.tableName} WHERE ${columnName} >= ? AND ${columnName} <= ? )`;
+        const values = [];
+        if( typeof paramsObj === 'object' ) {
+            Object.values(paramsObj).map( val => values.push(val));
+        }  
+        return {
+            columnSet,
+            values,
+        }
+    }
 }
 
 module.exports = BaseModel;

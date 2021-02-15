@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const HttpException = require('./HttpExeception.utils');
 
-const multipleColumnSet = (object) => {
+const multipleColumnSet = (object,separator = ',') => {
     if(typeof object !== 'object' ) {
         throw new Error('Invalid input type');
     }
@@ -10,11 +10,14 @@ const multipleColumnSet = (object) => {
     const keys = Object.keys(object);
     const values = Object.values(object);
 
-    const columnSet = keys.map( key => `${key} = ?`).join(',');
+    const columnSet = keys.filter( k => object[k] !== null  ).map( key => ` ${key} = ? `).join(separator);
+
+    const valuesFilter = values.filter( values => values !== null );
 
     return {
         columnSet,
         values,
+        valuesFilter,
     }
 }
 

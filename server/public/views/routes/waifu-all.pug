@@ -33,7 +33,7 @@ block content
                                 p.error-text #{errors['waifu-max-age']}
                     div.form-group
                         label( for="hair-type") Hair Type
-                        select.hair-type#hair-type
+                        select( name = "hair-type" value="0" ).hair-type#hair-type
                             option( selected ) All Type
                             each hairType in allHairType
                                 option( value=`${hairType['hair_type_id']}`) #{hairType['name_type']}
@@ -42,8 +42,8 @@ block content
                                 p.error-text #{errors['hair-type']}
                     div.form-group
                         label( for="date-time") Date Time
-                        select#date-time
-                            option( selected ) All Time
+                        select( name="date-time")#date-time
+                            option( selected value="0" ) All Time
                             each dateTime in allDateTime
                                 option( value=`${dateTime['date_time_id']}`) #{dateTime['time']}
                         if  errors && errors['date-time']
@@ -51,11 +51,11 @@ block content
                                 p.error-text #{errors['date-time']}
                     div.form-group
                         label( for="waifu-min-price") Min Price
-                        input( type="range" min="0" max="1000" id="waifu-min-price")
+                        input( type="range" min="0" max="1000" name="waifu-min-price" id="waifu-min-price")
                         p#waifu-min-price-txt.txt-price 
                     div.form-group
                         label( for="waifu-max-price") Max Price
-                        input( type="range" min="0" max="1000" id="waifu-max-price")
+                        input( type="range" min="0" max="1000" name="waifu-max-price" id="waifu-max-price")
                         p#waifu-max-price-txt.txt-price
                     div.form-group
                         input(type="submit" value="Search" ).submit-filter

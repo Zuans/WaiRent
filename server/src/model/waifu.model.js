@@ -14,14 +14,58 @@ class WaifuModel extends BaseModel {
                                 total_rating / count_rating AS ratings, 
                                 date_times.time AS date_time, 
                                 hair_types.name_type AS hair_type,
-                                hobby.name AS hobby,
+                                hobby_1.name AS hobby,
                                 hobby_2.name AS hobby_2
                                 FROM waifus 
                                 LEFT JOIN hair_types ON hair_types.hair_type_id  = waifus.hair_type
                                 LEFT JOIN date_times ON date_times.date_time_id = waifus.date_time
-                                LEFT JOIN hobby ON hobby.hobby_id = waifus.hobby
+                                LEFT JOIN hobby hobby_1 ON hobby_1.hobby_id = waifus.hobby
                                 LEFT JOIN hobby hobby_2 ON hobby_2.hobby_id = waifus.hobby`;
     }
+
+
+    async filter(allFilter) {
+        const {
+            name,
+            age,
+            price,
+            ...filter
+        } = allFilter;
+        let sql = `${this.selectSQL} WHERE`;
+        const params = [];
+
+        // SET Query Filter
+
+        if(name !== null ) {
+            sql += ` waifus.name LIKE "%${name}%" AND `;
+        }
+
+        // Filter select 
+        if(Object.keys(filter).length) {
+            const { columnSet,valuesFilter} = multipleColumnSet(filter,'AND');
+            //  add separator AND if columnset exist and values params
+            columnSet ? sql += ` ${columnSet} AND` : null;
+            valuesFilter ? params.push(...valuesFilter) : null;
+        }
+
+        // Age
+        if(Object.keys(age).length) {
+            const { columnSet,values } = this.queryRange('age',age);
+            sql += `${columnSet} AND`;
+            params.push(...values);
+        }        
+        
+        //  Price
+        if(Object.keys(price).length) {
+            const { columnSet,values } = this.queryRange('price',price);
+            sql += columnSet;
+            params.push(...values);
+        }
+
+        const result = await query(sql,params);
+        return result;
+    }
+
 
     async find(params = {}) {
         let sql = this.selectSQL;

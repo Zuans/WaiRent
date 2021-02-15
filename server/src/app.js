@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
 const liveReload = require('livereload');
 require('dotenv').config();
 
@@ -20,7 +21,7 @@ const waifuRoutes = require('./routes/page/waifuRoutes');
 app.set('views',path.join(__dirname,'../public/views'));
 app.set('view engine', 'pug');
 
-
+app.use(bodyParser.urlencoded({ extended : true }));
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname,'../public')));

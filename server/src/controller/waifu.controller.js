@@ -85,9 +85,7 @@ class WaifuController {
     async showAll(req,res) {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
-        console.log('hair');
-        console.log(req.body);
-        if(!req.body.filter) {
+        if(req.method == "GET") {
             const allWaifu = await waifuModel.find();
             if(!allWaifu) {
                 return res.render('routes/waifu-all',{
@@ -95,7 +93,7 @@ class WaifuController {
                     allWaifu : null
                 })
             }
-            res.render('routes/waifu-all',{
+            return res.render('routes/waifu-all',{
                 title : 'All Waifu',
                 allWaifu,
                 allDateTime,
@@ -103,6 +101,28 @@ class WaifuController {
                 errors : null
             });
         }
+        const { body } = req;
+        const isDeffPrice = body['waifu-min-price'] ===  body['waifu-max-price'] ? true : false;
+        const params  = {
+            name : body['waifu-name'] || null,
+            age : {
+                minAge : parseInt(body['waifu-min-age']) || 0,
+                maxAge : parseInt(body['waifu-max-age']) || 999999,
+            },
+            "hair_type" : parseInt(body['hair-type']) || null,
+            "date_time" : parseInt(body['date-time']) || null,
+            price : {   
+                minPrice : isDeffPrice ?   0  : body['waifu-min-price'] * 1000,
+                maxPrice : isDeffPrice ?   9999999  : body['waifu-max-price'] * 1000,
+            }
+        }
+        const filterWaifus = await waifuModel.filter(params);
+        return res.render('routes/waifu-all',{
+            title : 'All Waifu',
+            allWaifu : filterWaifus,
+            allDateTime,
+            allHairType,
+        });
     }
 
     async showDetail(req,res) {
