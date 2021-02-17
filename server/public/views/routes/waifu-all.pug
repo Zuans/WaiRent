@@ -60,7 +60,20 @@ block content
                     div.form-group
                         input(type="submit" value="Search" ).submit-filter
         div.waifu-all
-            h1.title-content All Waifu
+            div.input-wrapper
+                h3.title-content Search
+                input( type="text" name="search-text" id="search-text" placeholder="Search Something" )
+                button#search-button
+                    i.fas.fa-search
+            div.popular-tags
+                h3.title-content Popular tags
+                div.popular-tags-wrapper
+                    each tags in popularTags
+                        div.popular-tags-content
+                            a( href=`${baseURL}/waifu/${tags['type']}/${tags['id']}`)
+                                h3 #{tags['name']}
+                div.title-wrapper
+                h1.title-content All Waifu
             div.waifu-card-wrapper
                 each waifu in allWaifu
                     div.waifu-card

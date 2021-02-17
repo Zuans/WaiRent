@@ -85,12 +85,17 @@ class WaifuController {
     async showAll(req,res) {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
+        const popularTags = await waifuModel.popularTags();
+        // Check method GET
         if(req.method == "GET") {
             const allWaifu = await waifuModel.find();
             if(!allWaifu) {
                 return res.render('routes/waifu-all',{
                     title : 'All Waifu',
-                    allWaifu : null
+                    allWaifu : null,
+                    allDateTime,
+                    allHairType,
+                    popularTags
                 })
             }
             return res.render('routes/waifu-all',{
@@ -98,9 +103,12 @@ class WaifuController {
                 allWaifu,
                 allDateTime,
                 allHairType,
+                popularTags,
                 errors : null
             });
         }
+
+        // If method POST
         const { body } = req;
         const isDeffPrice = body['waifu-min-price'] ===  body['waifu-max-price'] ? true : false;
         const params  = {
@@ -122,6 +130,8 @@ class WaifuController {
             allWaifu : filterWaifus,
             allDateTime,
             allHairType,
+            popularTags,
+            errors : null
         });
     }
 
