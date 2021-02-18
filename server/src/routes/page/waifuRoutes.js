@@ -2,13 +2,18 @@ const express = require('express');
 const router = express.Router();
 const waifuController = require('../../controller/waifu.controller');
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
-const { waifuFilterSchema } = require('../../middleware/validators/waifuValidator.middleware');
+const {
+    waifuFilterSchema
+} = require('../../middleware/validators/waifuValidator.middleware');
 
-router.get('/',awaitHandlerFactory(waifuController.showAll));
+router.get('/', awaitHandlerFactory(waifuController.showAll));
 
-router.post('/',awaitHandlerFactory(waifuController.showAll));
+router.get('/:tagsType/:type', awaitHandlerFactory(waifuController.showTags));
 
-router.get('/:id',awaitHandlerFactory(waifuController.showDetail));
+
+router.post('/', awaitHandlerFactory(waifuController.showAll));
+
+router.get('/:id', awaitHandlerFactory(waifuController.showDetail));
 
 
 
