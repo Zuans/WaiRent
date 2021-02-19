@@ -2,6 +2,7 @@
 const waifuModel = require('../model/waifu.model');
 const dateTimeModel = require('../model/dateTime.model');
 const hairTypeModel = require('../model/hairType.model');
+const hobbyModel = require('../model/hobby.model');
 // Utils
 const {
     sendResponses,
@@ -143,26 +144,53 @@ class WaifuController {
     }
 
     async showTags(req, res) {
+        const {
+            tagType,
+            tagValue
+        } = req.params;
+
+
         const popularTags = await waifuModel.popularTags();
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
 
-        const tagsType = setCamelCase(req.params.tagsType, '_');
-        console.log(tagsType);
-        // const value = req.params.type;
-        // const params = {};
-        // params[tagsType] = value;
+        const classTags = {
+            "hair_type"  : {
+                class : hairTypeModel,
+                method : 'findByNameOrID'
+            },
+            "date_time" : {
+                class : dateTimeModel,
+                method : 'findByTimeOrID',
+            },
+            "hobby" : {
+                class : hobbyModel,
+                method : "findByNameOrID",
+            }
+        }
 
-        // const allWaifu = await waifuModel.find(params);
+        // Selected class dynamic
+        const classSelected = classTags[tagType].class;
+        const method = classTags[tagType].method;
+        const tagRow = await classSelected[method](tagValue);
+        if(!tagRow) throw new Error('this tag not avaible');
+        
 
-        // return res.render('routes/waifu-all', {
-        //     title: 'All Waifu',
-        //     allWaifu,
-        //     allDateTime,
-        //     allHairType,
-        //     popularTags,
-        //     errors: null
-        // });
+        // get Tag ID
+        const tagsID = Object.values(tagRow)[0];
+        const params = {};
+        params[tagType] = tagsID;
+        const allWaifu = await waifuModel.find(params);
+
+
+        return res.render('routes/waifu-all', {
+            title: 'All Waifu',
+            allWaifu,
+            allDateTime,
+            allHairType,
+            popularTags,
+            errors: null
+        });
     }
 
     async showDetail(req, res) {

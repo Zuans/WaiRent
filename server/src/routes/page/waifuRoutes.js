@@ -8,7 +8,7 @@ const {
 
 router.get('/', awaitHandlerFactory(waifuController.showAll));
 
-router.get('/:tagsType/:type', awaitHandlerFactory(waifuController.showTags));
+router.get('/:tagType/:tagValue', awaitHandlerFactory(waifuController.showTags));
 
 
 router.post('/', awaitHandlerFactory(waifuController.showAll));

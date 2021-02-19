@@ -18,6 +18,12 @@ class DateTimeModel extends BaseModel {
         return affectedRows;
     }
 
+    async findByTimeOrID(value) {
+        const sql = `SELECT * FROM ${this.tableName} WHERE time = ? OR date_time_id = ?`;
+        const result = await query(sql,[value,value]);
+        return result[0];
+    }
+
 
 
 }

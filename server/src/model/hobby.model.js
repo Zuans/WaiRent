@@ -19,6 +19,12 @@ class HobbyModel extends BaseModel {
         return affectedRows;
     }
 
+    async findByNameOrID(value) {
+        const sql = `SELECT * FROM ${this.tableName} WHERE name = ? OR hobby_id = ?`;
+        const result = await query(sql,[value,value]);
+        return result[0];
+    }
+
 }
 
 
