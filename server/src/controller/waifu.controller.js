@@ -149,6 +149,9 @@ class WaifuController {
             tagValue
         } = req.params;
 
+        //  assignable variable
+        let allWaifu = [];
+        const params = {};
 
         const popularTags = await waifuModel.popularTags();
         const allDateTime = await dateTimeModel.find();
@@ -166,6 +169,7 @@ class WaifuController {
             "hobby" : {
                 class : hobbyModel,
                 method : "findByNameOrID",
+                waifuMethod : "findByHobby"
             }
         }
 
@@ -178,10 +182,16 @@ class WaifuController {
 
         // get Tag ID
         const tagsID = Object.values(tagRow)[0];
-        const params = {};
         params[tagType] = tagsID;
-        const allWaifu = await waifuModel.find(params);
+        
 
+        // if tagsType have specified method query to select waifu
+        if( classTags[tagType].hasOwnProperty('waifuMethod') ) {
+            allWaifu = await waifuModel.findByHobby(tagsID);
+        } else {
+            allWaifu = await waifuModel.find(params);
+        }
+        // const allWaifu = await waifuModel.find(params);
 
         return res.render('routes/waifu-all', {
             title: 'All Waifu',

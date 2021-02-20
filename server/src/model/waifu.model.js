@@ -22,7 +22,7 @@ class WaifuModel extends BaseModel {
                                 LEFT JOIN hair_types ON hair_types.hair_type_id  = waifus.hair_type
                                 LEFT JOIN date_times ON date_times.date_time_id = waifus.date_time
                                 LEFT JOIN hobby hobby_1 ON hobby_1.hobby_id = waifus.hobby
-                                LEFT JOIN hobby hobby_2 ON hobby_2.hobby_id = waifus.hobby`;
+                                LEFT JOIN hobby hobby_2 ON hobby_2.hobby_id = waifus.hobby_2`;
 
     }
 
@@ -131,6 +131,15 @@ class WaifuModel extends BaseModel {
         return result;
     }
 
+
+    // async findByHobby(value) {
+    //     let sql = `${this.selectSQL} WHERE hobby = ? OR hobby_2 = ?`;
+    //     console.log(sql);
+    //     console.log(value);
+    //     const result = await query(sql,[value,value]);
+    //     return result;
+    // } 
+
     async popularTags() {
         const sql = `SELECT DISTINCT
                             CASE
@@ -172,7 +181,8 @@ class WaifuModel extends BaseModel {
                                     ORDER BY count_type DESC  
                                 ) 
                                     tbl_date_time 
-                            ORDER BY count DESC`;
+                        ORDER BY count DESC
+                        LIMIT 5`;
         const result = await query(sql);
         return result;
     }
@@ -205,7 +215,6 @@ class WaifuModel extends BaseModel {
         const waifu_id = parseInt(id);
         const sql = `UPDATE ${this.tableName} SET total_rating = total_rating + ?, 
                      count_rating = count_rating + 1 WHERE waifu_id = ?`;
-        console.log(sql);
         const result = await query(sql, [rating, waifu_id]);
         const affectedRows = result.affectedRows;
         return affectedRows;

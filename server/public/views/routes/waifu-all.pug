@@ -62,9 +62,10 @@ block content
         div.waifu-all
             div.input-wrapper
                 h3.title-content Search
-                input( type="text" name="search-text" id="search-text" placeholder="Search Something" )
-                button#search-button
-                    i.fas.fa-search
+                form#name-form(action=`${baseURL}/waifu` method="POST" )
+                    input( type="text" name="waifu-name" id="search-text" placeholder="Search waifu name" )
+                    button#search-button( role="submit")
+                        i.fas.fa-search
             div.popular-tags
                 h3.title-content Popular tags
                 div.popular-tags-wrapper
@@ -73,7 +74,6 @@ block content
                             a( href=`${baseURL}/waifu/${tags['type']}/${tags['id']}`)
                                 h3 #{tags['name']}
                 div.title-wrapper
-                h1.title-content All Waifu
             div.waifu-card-wrapper
                 each waifu in allWaifu
                     div.waifu-card
@@ -93,6 +93,8 @@ block content
                                 a(href=`${baseURL}/waifu/hair_type/${waifu['hair_type']}`) #{waifu['hair_type']}
                             p.tags-item 
                                 a(href=`${baseURL}/waifu/hobby/${waifu['hobby']}`) #{waifu['hobby']}
+                            p.tags-item 
+                                a(href=`${baseURL}/waifu/hobby/${waifu['hobby_2']}`) #{waifu['hobby_2']}
                         a.waifu-btn-detail( href = `${baseURL}/waifu/${waifu['waifu_id']}` ) See Detail
 
 block append endScripts
