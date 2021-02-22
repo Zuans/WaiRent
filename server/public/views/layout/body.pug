@@ -7,6 +7,8 @@ html
         meta( charset="UTF-8" )
         meta( name="viewport" content="width=device-width,initial-scale=1.0" )
         title WaiRent | #{title}
+        block moduleScripts
+            script(  type="module" src=`${baseAssets}/js/constant.js`)
         block scripts
             script( src="https://kit.fontawesome.com/f40c32a411.js" crossorigin="anonymous" )
 
@@ -20,3 +22,6 @@ html
         include footer.pug
         block endScripts
             script( src=`${baseAssets}/js/navbar.js`)
+
+
+            

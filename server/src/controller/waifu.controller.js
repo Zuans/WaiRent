@@ -208,18 +208,30 @@ class WaifuController {
             waifu_id: req.params.id,
         }
         const detailWaifu = await waifuModel.findById(id);
-        if (!detailWaifu) {
-            return res.render('routes/waifu-detail', {
-                title: 'Detail waifu',
-                detailWaifu: null,
-            });
-        }
         res.render('routes/waifu-detail', {
             title: 'Detail waifu',
             detailWaifu,
         });
     }
 
+
+    async sortBy(req,res) {
+
+        // set extended query for order by
+        const columnOrder = waifuModel.queryOrderBy(req.query);
+        let { sql,params } = await waifuModel.getLastQuery();
+        console.log(sql);
+        // Add query and params order to last query
+        sql += ` ${columnOrder};`;
+
+        console.log(sql);
+    
+        const result = await waifuModel.findInstant(sql,params);
+        
+
+        return sendResponses(res,result,'success get data');
+
+    }
 }
 
 

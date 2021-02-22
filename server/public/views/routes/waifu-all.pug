@@ -5,10 +5,10 @@ block append styles
 
 block content
     section#waifus-wrapper
-        div.switch-wrapper
-            button#filter-switch Filter
         div.waifu-filter
             h1.title-content Filter Waifu
+            button#btn-filter-off.btn-switch 
+                i.fas.fa-times
             hr.breakpoint
             div.form-filter-wrapper
                 h1.title-form Search Name
@@ -66,26 +66,32 @@ block content
                     input( type="text" name="waifu-name" id="search-text" placeholder="Search waifu name" )
                     button#search-button( role="submit")
                         i.fas.fa-search
-            div.popular-tags
-                h3.title-content Popular tags
+                button#btn-filter-on.btn-switch  Filter
+            div.filter-select
                 div.popular-tags-wrapper
                     each tags in popularTags
-                        div.popular-tags-content
-                            a( href=`${baseURL}/waifu/${tags['type']}/${tags['id']}`)
-                                h3 #{tags['name']}
-                div.title-wrapper
+                        a( href=`${baseURL}/waifu/${tags['type']}/${tags['id']}`).popular-tags-content
+                            h3 #{tags['name']}
+                div.sort-by-wrapper
+                    select#select-sort-filter
+                        option Sort by
+                        option(value="ratings-desc") Highest rating
+                        option(value="ratings-asc") Lowest rating
+                        option(value="price-desc") Highest price
+                        option(value="price-asc") Lowest rating
+                        option(value="age-desc") Oldest
+                        option(value="age-asc") Youngest
             div.waifu-card-wrapper
                 each waifu in allWaifu
                     div.waifu-card
                         img.waifu-img(src = `${baseAssets}/img/asuna.png`) 
                         h1.waifu-name #{waifu['name']}
+                        h3.waifu-age #{waifu['age']} years old
                         h1.waifu-price $#{waifu['price']}/hour
                         div.ratings
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            - var ratingCount = 0
+                            while ratingCount <= waifu['ratings']
+                                i(data-index =`${ratingCount++}`).fas.fa-star
                         div.tags
                             p.tags-item
                                 a(href=`${baseURL}/waifu/date_time/${waifu['date_time']}`)  #{waifu['date_time']}

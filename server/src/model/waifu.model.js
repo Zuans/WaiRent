@@ -23,7 +23,10 @@ class WaifuModel extends BaseModel {
                                 LEFT JOIN date_times ON date_times.date_time_id = waifus.date_time
                                 LEFT JOIN hobby hobby_1 ON hobby_1.hobby_id = waifus.hobby
                                 LEFT JOIN hobby hobby_2 ON hobby_2.hobby_id = waifus.hobby_2`;
-
+        this.lastQuery = {
+            sql : "",
+            params : [],
+        };
     }
 
 
@@ -75,6 +78,7 @@ class WaifuModel extends BaseModel {
         }
 
         const result = await query(sql, params);
+        this.setLastQuery(sql,params);
         return result;
     }
 
@@ -82,6 +86,7 @@ class WaifuModel extends BaseModel {
     async find(params = {}) {
         let sql = this.selectSQL;
         if (!Object.keys(params).length) {
+            this.setLastQuery(sql);
             return await query(sql);
         }
 
@@ -91,6 +96,7 @@ class WaifuModel extends BaseModel {
         } = multipleColumnSet(params);
         sql += ` WHERE ${columnSet}`;
         const result = await query(sql, [...values]);
+        this.setLastQuery(sql,[...values]);
         return result;
     }
 
@@ -100,6 +106,7 @@ class WaifuModel extends BaseModel {
         const sql = `${this.selectSQL}  
                      WHERE ${idColName} = ?`;
         const result = await query(sql, [idColVal]);
+        tthis.setLastQuery(sql,[idColVal]);
         return result[0];
     }
 
@@ -117,6 +124,7 @@ class WaifuModel extends BaseModel {
         } = multipleColumnSet(params);
         sql += ` WHERE ${columnSet}`;
         const result = await query(sql, [...values]);
+        this.setLastQuery(sql,[...values]);
         return result[0];
     }
 
@@ -128,17 +136,10 @@ class WaifuModel extends BaseModel {
             return result;
         }
         const result = await query(sql);
+        this.setLastQuery(sql,params);
         return result;
     }
 
-
-    // async findByHobby(value) {
-    //     let sql = `${this.selectSQL} WHERE hobby = ? OR hobby_2 = ?`;
-    //     console.log(sql);
-    //     console.log(value);
-    //     const result = await query(sql,[value,value]);
-    //     return result;
-    // } 
 
     async popularTags() {
         const sql = `SELECT DISTINCT
@@ -187,9 +188,18 @@ class WaifuModel extends BaseModel {
         return result;
     }
 
-    async get_hair_type() {
-        return 'awdawd';
+    async setLastQuery(sql,params = []) {
+        return this.lastQuery = {
+            sql,
+            params,
+        }
     }
+
+
+    async getLastQuery() {
+        return this.lastQuery;
+    }
+
 
     async create({
         name,

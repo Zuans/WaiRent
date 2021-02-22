@@ -10,6 +10,7 @@ router.get('/', awaitHandlerFactory(waifuController.showAll));
 
 router.get('/:tagType/:tagValue', awaitHandlerFactory(waifuController.showTags));
 
+router.get('/sort',awaitHandlerFactory(waifuController.sortBy));
 
 router.post('/', awaitHandlerFactory(waifuController.showAll));
 

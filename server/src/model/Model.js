@@ -8,6 +8,8 @@ class BaseModel {
         this.tableName = tableName;
     }
 
+
+
     async find(params ={}) {
         let sql = `SELECT * FROM ${this.tableName}`;
         if(!Object.keys(params).length) {
@@ -37,6 +39,13 @@ class BaseModel {
         const sql = `SELECT * FROM ${this.tableName} WHERE ${idColName} = ?`;
         const result = await query(sql,[idColVal]);
         return result[0];
+    }
+
+    async findInstant(sql,params = []) {
+        // validation params type
+        if(!Array.isArray(params)) throw new Error('wrong type input');
+        const result = await query(sql,params);
+        return result;
     }
 
     // MAKE BASE METHOD ON MODEL CONTROLLER !;
@@ -72,6 +81,16 @@ class BaseModel {
             columnSet,
             values,
         }
+    }
+
+    queryOrderBy(orderObj = {}) {
+        let columnOrder = "ORDER BY";
+        if( typeof orderObj !== "object") throw new Error('wrong type input')
+        const orderKey = Object.keys(orderObj);
+        
+        // Set column
+        columnOrder += orderKey.map( key => ` ${key} ${orderObj[key]}`).join(',');
+        return columnOrder;
     }
 }
 

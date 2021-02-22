@@ -41,7 +41,8 @@ const sendResponses = (res, data = null, msg = '', statusCode = 200, statusMsg =
     return res.status(statusCode).send({
         status: statusMsg,
         data,
-        msg: msg
+        msg: msg,
+        error : null
     });
 }
 
