@@ -63,7 +63,7 @@ block content
             div.input-wrapper
                 h3.title-content Search
                 form#name-form(action=`${baseURL}/waifu` method="POST" )
-                    input( type="text" name="waifu-name" id="search-text" placeholder="Search waifu name" )
+                    input( type="text" name="waifu-name" id="search-text" autocomplete="off" placeholder="Search waifu name" )
                     button#search-button( role="submit")
                         i.fas.fa-search
                 button#btn-filter-on.btn-switch  Filter
