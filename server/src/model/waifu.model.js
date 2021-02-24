@@ -106,7 +106,7 @@ class WaifuModel extends BaseModel {
         const sql = `${this.selectSQL}  
                      WHERE ${idColName} = ?`;
         const result = await query(sql, [idColVal]);
-        tthis.setLastQuery(sql,[idColVal]);
+        this.setLastQuery(sql,[idColVal]);
         return result[0];
     }
 
@@ -137,6 +137,12 @@ class WaifuModel extends BaseModel {
         }
         const result = await query(sql);
         this.setLastQuery(sql,params);
+        return result;
+    }
+
+    async findByHobby(hobbyID) {
+        const sql = `${this.selectSQL} WHERE hobby = ? OR hobby_2  = ?`;
+        const result = await query(sql,[hobbyID,hobbyID]);
         return result;
     }
 
@@ -183,7 +189,7 @@ class WaifuModel extends BaseModel {
                                 ) 
                                     tbl_date_time 
                         ORDER BY count DESC
-                        LIMIT 5`;
+                        LIMIT 8`;
         const result = await query(sql);
         return result;
     }
@@ -196,7 +202,7 @@ class WaifuModel extends BaseModel {
     }
 
 
-    async getLastQuery() {
+    getLastQuery() {
         return this.lastQuery;
     }
 

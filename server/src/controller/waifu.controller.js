@@ -9,7 +9,16 @@ const {
     sendResponsesEmpty,
     setCamelCase
 } = require('../utils/common.utils');
+
+const  { 
+    classTags,
+    getClassTags
+} =  require('../utils/tags.utils');
+
+// Helper
+const { filterWaifuValidation } =  require('../helpers/validations.helpers');
 const HttpExeception = require('../utils/HttpExeception.utils');
+
 
 class WaifuController {
 
@@ -85,14 +94,69 @@ class WaifuController {
         const topRating = await waifuModel.findTopRating();
         return sendResponses(res, topRating, 'success get all top rating');
     }
-    // Method For Pages
+
+
+
+    async filter(req,res) {        
+        const params = filterWaifuValidation(req);
+        const filterWaifus = await waifuModel.filter(params);
+
+        return sendResponses(res,filterWaifus,'success get filter waifus');
+    }
+
+
+    async getByTags(req,res) {
+        const { 
+            tagType,
+            tagValue,
+        } = req.params;
+
+        let allWaifu = [];
+        const params = {};
+
+        const selectedTag = getClassTags(tagType);
+        if(!selectedTag) throw new Error('this tags type is not available');
+        const selectedClass = selectedTag.class;
+        const method = selectedTag.method;
+        const tagResult = await selectedClass[method](tagValue);
+        const tagID = Object.values(tagResult)[0];
+
+        // set the params for query the waifu
+        params[tagType] =  tagID;
+
+        // if tagsType have specified method query to select waifu
+        if(selectedClass.hasOwnProperty('waifuMethod')) {
+            allWaifu = await waifuModel[selectedTag.waifuMethod](tagID);
+        } else {
+            allWaifu = await waifuModel.find(params);
+        }   
+
+        return sendResponses(res,allWaifu,'success get waifus by tag');
+
+    }
+
+    async sortBy(req,res) {
+        // set extended query for order by
+        const columnOrder = waifuModel.queryOrderBy(req.query);
+        let { sql,params } = waifuModel.getLastQuery();
+        // Add query and params order to last query
+        sql += ` ${columnOrder};`;
+        
+        const result = await waifuModel.findBySQL(sql,params);
+        if(!result) {
+            return sendResponsesEmpty(res);
+        }
+
+        return sendResponses(res,result,'success get data');
+
+    }
 
     async showAll(req, res) {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
         const popularTags = await waifuModel.popularTags();
+
         // Check method GET
-        if (req.method == "GET") {
             const allWaifu = await waifuModel.find();
             if (!allWaifu) {
                 return res.render('routes/waifu-all', {
@@ -112,36 +176,8 @@ class WaifuController {
                 popularTags,
                 errors: null
             });
-        }
-
-        // If method POST
-        const {
-            body
-        } = req;
-        const isDeffPrice = body['waifu-min-price'] === body['waifu-max-price'] ? true : false;
-        const params = {
-            name: body['waifu-name'] || null,
-            age: {
-                minAge: parseInt(body['waifu-min-age']) || 0,
-                maxAge: parseInt(body['waifu-max-age']) || 999999,
-            },
-            "hair_type": parseInt(body['hair-type']) || null,
-            "date_time": parseInt(body['date-time']) || null,
-            price: {
-                minPrice: isDeffPrice ? 0 : body['waifu-min-price'] * 1000,
-                maxPrice: isDeffPrice ? 9999999 : body['waifu-max-price'] * 1000,
-            }
-        }
-        const filterWaifus = await waifuModel.filter(params);
-        return res.render('routes/waifu-all', {
-            title: 'All Waifu',
-            allWaifu: filterWaifus,
-            allDateTime,
-            allHairType,
-            popularTags,
-            errors: null
-        });
     }
+
 
     async showTags(req, res) {
         const {
@@ -157,41 +193,28 @@ class WaifuController {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
 
-        const classTags = {
-            "hair_type"  : {
-                class : hairTypeModel,
-                method : 'findByNameOrID'
-            },
-            "date_time" : {
-                class : dateTimeModel,
-                method : 'findByTimeOrID',
-            },
-            "hobby" : {
-                class : hobbyModel,
-                method : "findByNameOrID",
-                waifuMethod : "findByHobby"
-            }
-        }
+
+
 
         // Selected class dynamic
-        const classSelected = classTags[tagType].class;
-        const method = classTags[tagType].method;
-        const tagRow = await classSelected[method](tagValue);
-        if(!tagRow) throw new Error('this tag not avaible');
-        
+        const selectedTag = getClassTags(tagType);
+        if(!selectedTag) throw new Error('this tags type is not available');
+        const selectedClass = selectedTag.class;
+        const method = selectedTag.method;
+        const tagResult = await selectedClass[method](tagValue);
 
-        // get Tag ID
-        const tagsID = Object.values(tagRow)[0];
-        params[tagType] = tagsID;
+        // set Tag ID
+        const tagID = Object.values(tagResult)[0];
+        params[tagType] = tagID;
         
-
         // if tagsType have specified method query to select waifu
-        if( classTags[tagType].hasOwnProperty('waifuMethod') ) {
-            allWaifu = await waifuModel.findByHobby(tagsID);
-        } else {
+        if(selectedTag.hasOwnProperty('waifuQuery')) {
+            allWaifu = await waifuModel[selectedTag.waifuQuery](tagID);
+        }else {
             allWaifu = await waifuModel.find(params);
         }
-        // const allWaifu = await waifuModel.find(params);
+        
+        // const
 
         return res.render('routes/waifu-all', {
             title: 'All Waifu',
@@ -214,24 +237,27 @@ class WaifuController {
         });
     }
 
+    async showFilter(req,res) {
 
-    async sortBy(req,res) {
+        const params = filterWaifuValidation(req);
+        const filterWaifu = await waifuModel.filter(params);
 
-        // set extended query for order by
-        const columnOrder = waifuModel.queryOrderBy(req.query);
-        let { sql,params } = await waifuModel.getLastQuery();
-        console.log(sql);
-        // Add query and params order to last query
-        sql += ` ${columnOrder};`;
+        const allDateTime = await dateTimeModel.find();
+        const allHairType = await hairTypeModel.find();
+        const popularTags = await waifuModel.popularTags();
 
-        console.log(sql);
-    
-        const result = await waifuModel.findInstant(sql,params);
-        
-
-        return sendResponses(res,result,'success get data');
+        return res.render('routes/waifu-all', {
+            title: 'All Waifu',
+            allWaifu : filterWaifu,
+            allDateTime,
+            allHairType,
+            popularTags,
+            errors: null
+        });
 
     }
+
+
 }
 
 

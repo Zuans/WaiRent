@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const waifuController = require('../../controller/waifu.controller');
+const WaifuController = require('../../controller/waifu.controller');
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 const {
     waifuFilterSchema
 } = require('../../middleware/validators/waifuValidator.middleware');
 
-router.get('/', awaitHandlerFactory(waifuController.showAll));
+router.get('/',awaitHandlerFactory(WaifuController.showAll));
 
-router.get('/:tagType/:tagValue', awaitHandlerFactory(waifuController.showTags));
+router.get('/tag/:tagType/:tagValue', awaitHandlerFactory(WaifuController.showTags));
 
-router.get('/sort',awaitHandlerFactory(waifuController.sortBy));
+router.post('/filter',awaitHandlerFactory(WaifuController.showFilter));
 
-router.post('/', awaitHandlerFactory(waifuController.showAll));
-
-router.get('/:id', awaitHandlerFactory(waifuController.showDetail));
+router.get('/:id', awaitHandlerFactory(WaifuController.showDetail));
 
 
 

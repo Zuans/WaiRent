@@ -11,8 +11,7 @@ block content
                 i.fas.fa-times
             hr.breakpoint
             div.form-filter-wrapper
-                h1.title-form Search Name
-                form#filter-form(action=`${baseURL}/waifu` method="POST" )
+                form#filter-form(action=`${baseURL}/waifu/filter` method="POST" )
                     div.form-group
                         label( for="waifu-name") Name
                         input( type="text" name="waifu-name" id="waifu-name" autocomplete="off")
@@ -62,7 +61,7 @@ block content
         div.waifu-all
             div.input-wrapper
                 h3.title-content Search
-                form#name-form(action=`${baseURL}/waifu` method="POST" )
+                form#name-form(action=`${baseURL}/waifu/filter`  method="POST" )
                     input( type="text" name="waifu-name" id="search-text" autocomplete="off" placeholder="Search waifu name" )
                     button#search-button( role="submit")
                         i.fas.fa-search
@@ -70,7 +69,7 @@ block content
             div.filter-select
                 div.popular-tags-wrapper
                     each tags in popularTags
-                        a( href=`${baseURL}/waifu/${tags['type']}/${tags['id']}`).popular-tags-content
+                        a( href=`${baseURL}/waifu/tag/${tags['type']}/${tags['id']}`).popular-tags-content
                             h3 #{tags['name']}
                 div.sort-by-wrapper
                     select#select-sort-filter
@@ -94,13 +93,13 @@ block content
                                 i(data-index =`${ratingCount++}`).fas.fa-star
                         div.tags
                             p.tags-item
-                                a(href=`${baseURL}/waifu/date_time/${waifu['date_time']}`)  #{waifu['date_time']}
+                                a(href=`${baseURL}/waifu/tag/date_time/${waifu['date_time']}`)  #{waifu['date_time']}
                             p.tags-item    
-                                a(href=`${baseURL}/waifu/hair_type/${waifu['hair_type']}`) #{waifu['hair_type']}
+                                a(href=`${baseURL}/waifu/tag/hair_type/${waifu['hair_type']}`) #{waifu['hair_type']}
                             p.tags-item 
-                                a(href=`${baseURL}/waifu/hobby/${waifu['hobby']}`) #{waifu['hobby']}
+                                a(href=`${baseURL}/waifu/tag/hobby/${waifu['hobby']}`) #{waifu['hobby']}
                             p.tags-item 
-                                a(href=`${baseURL}/waifu/hobby/${waifu['hobby_2']}`) #{waifu['hobby_2']}
+                                a(href=`${baseURL}/waifu/tag/hobby/${waifu['hobby_2']}`) #{waifu['hobby_2']}
                         a.waifu-btn-detail( href = `${baseURL}/waifu/${waifu['waifu_id']}` ) See Detail
 
 block append endScripts

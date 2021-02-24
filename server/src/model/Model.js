@@ -41,7 +41,7 @@ class BaseModel {
         return result[0];
     }
 
-    async findInstant(sql,params = []) {
+    async findBySQL(sql,params = []) {
         // validation params type
         if(!Array.isArray(params)) throw new Error('wrong type input');
         const result = await query(sql,params);
