@@ -3,6 +3,8 @@ const waifuModel = require('../model/waifu.model');
 const dateTimeModel = require('../model/dateTime.model');
 const hairTypeModel = require('../model/hairType.model');
 const hobbyModel = require('../model/hobby.model');
+const tagModel = require('../model/tag.model');
+
 // Utils
 const {
     sendResponses,
@@ -154,7 +156,7 @@ class WaifuController {
     async showAll(req, res) {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
-        const popularTags = await waifuModel.popularTags();
+        const popularTags = await tagModel.getPopular();
 
         // Check method GET
             const allWaifu = await waifuModel.find();
@@ -189,7 +191,7 @@ class WaifuController {
         let allWaifu = [];
         const params = {};
 
-        const popularTags = await waifuModel.popularTags();
+        const popularTags = await tagModel.getPopular();
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
 
