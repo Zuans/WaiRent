@@ -207,6 +207,7 @@ class WaifuController {
 
         // set Tag ID
         const tagID = Object.values(tagResult)[0];
+        const tagName = Object.values(tagResult)[1];
         params[tagType] = tagID;
         
         // if tagsType have specified method query to select waifu
@@ -224,7 +225,27 @@ class WaifuController {
             allDateTime,
             allHairType,
             popularTags,
-            errors: null
+            errors: null,
+            searchMsg : `result search for tag type "${tagName}"`
+        });
+    }
+
+    async showHairLen(req,res) {
+        const lengthType = req.params.lengthType;
+        const popularTags = await tagModel.getPopular();
+        const allDateTime = await dateTimeModel.find();
+        const allHairType = await hairTypeModel.find();
+        const allWaifu = await waifuModel.findByHairLength(lengthType);
+
+
+        return res.render('routes/waifu-all', {
+            title: 'All Waifu',
+            allWaifu,
+            allDateTime,
+            allHairType,
+            popularTags,
+            errors: null,
+            searchMsg : `result search for hair-length "${lengthType}"`
         });
     }
 
@@ -246,7 +267,7 @@ class WaifuController {
 
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
-        const popularTags = await waifuModel.popularTags();
+        const popularTags = await tagModel.getPopular();
 
         return res.render('routes/waifu-all', {
             title: 'All Waifu',
@@ -254,7 +275,8 @@ class WaifuController {
             allDateTime,
             allHairType,
             popularTags,
-            errors: null
+            errors: null,
+            searchMsg : `search result from filter "form"`
         });
 
     }

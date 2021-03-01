@@ -146,53 +146,13 @@ class WaifuModel extends BaseModel {
         return result;
     }
 
-
-    async popularTags() {
-        const sql = `SELECT DISTINCT
-                            CASE
-                                WHEN tbl_hair_type.count_type >= tbl_date_time.count_type THEN tbl_hair_type.hair_type
-                                WHEN tbl_hair_type.count_type < tbl_date_time.count_type THEN tbl_date_time.date_time
-                            END AS id,
-                            CASE
-                                WHEN tbl_hair_type.count_type >= tbl_date_time.count_type THEN "hair_type" 
-                                WHEN tbl_hair_type.count_type < tbl_date_time.count_type THEN "date_time"
-                            END AS type,
-                            CASE
-                                WHEN tbl_hair_type.count_type >= tbl_date_time.count_type THEN tbl_hair_type.name 
-                                WHEN tbl_hair_type.count_type < tbl_date_time.count_type THEN tbl_date_time.time
-                            END AS name,
-                            CASE
-                                WHEN tbl_hair_type.count_type >= tbl_date_time.count_type THEN tbl_hair_type.count_type 
-                                WHEN tbl_hair_type.count_type < tbl_date_time.count_type THEN tbl_date_time.count_type
-                            END AS count
-                            FROM
-                                (  
-                                    SELECT  
-                                        hair_type, 
-                                        COUNT( hair_type) AS count_type, 
-                                        hair_types.name_type AS name
-                                    FROM waifus AS w1 
-                                    LEFT JOIN hair_types ON hair_types.hair_type_id = w1.hair_type
-                                    GROUP BY hair_type
-                                    ORDER BY count_type DESC 
-                                ) 
-                                    tbl_hair_type,
-                                ( 
-                                    SELECT  
-                                        date_time, 
-                                        COUNT( date_time) AS count_type,
-                                        date_times.time AS time
-                                    FROM waifus AS w2 
-                                    LEFT JOIN date_times ON date_times.date_time_id = w2.date_time
-                                    GROUP BY date_time 
-                                    ORDER BY count_type DESC  
-                                ) 
-                                    tbl_date_time 
-                        ORDER BY count DESC
-                        LIMIT 8`;
-        const result = await query(sql);
+    async findByHairLength(lengthType) {
+        let sql = this.selectSQL;
+        sql += ` WHERE hair_types.hair_length = ?`;
+        const result = await query(sql,[lengthType]);
         return result;
     }
+
 
     async setLastQuery(sql,params = []) {
         return this.lastQuery = {
