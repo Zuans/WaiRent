@@ -17,6 +17,8 @@ const ApiRoutes = require('./routes/api_v1/ApiRoutes');
 // Router page import
 const homeRoutes = require('./routes/page/homeRoutes');
 const waifuRoutes = require('./routes/page/waifuRoutes');
+const authRoutes = require("./routes/page/authRoutes");
+
 
 app.set('views',path.join(__dirname,'../public/views'));
 app.set('view engine', 'pug');
@@ -48,9 +50,11 @@ if( process.env.NODE_ENV == 'development' ) {
 
 app.get('/',homeRoutes);
 
-// app.use('/hobby',hobbyRoute);
-app.use('/api/wairent/v1',ApiRoutes);
+// Views middleware
 app.use('/waifu',waifuRoutes);
+app.use('/auth',authRoutes);
+// API middleware
+app.use('/api/wairent/v1',ApiRoutes);
 
 
 

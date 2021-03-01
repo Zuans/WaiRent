@@ -161,7 +161,7 @@ class WaifuController {
         // Check method GET
             const allWaifu = await waifuModel.find();
             if (!allWaifu) {
-                return res.render('routes/waifu-all', {
+                return res.render('routes/waifu/waifu-all', {
                     title: 'All Waifu',
                     allWaifu: null,
                     allDateTime,
@@ -170,7 +170,7 @@ class WaifuController {
                 })
             }
 
-            return res.render('routes/waifu-all', {
+            return res.render('routes/waifu/waifu-all', {
                 title: 'All Waifu',
                 allWaifu,
                 allDateTime,
@@ -219,7 +219,7 @@ class WaifuController {
         
         // const
 
-        return res.render('routes/waifu-all', {
+        return res.render('routes/waifu/waifu-all', {
             title: 'All Waifu',
             allWaifu,
             allDateTime,
@@ -238,7 +238,7 @@ class WaifuController {
         const allWaifu = await waifuModel.findByHairLength(lengthType);
 
 
-        return res.render('routes/waifu-all', {
+        return res.render('routes/waifu/waifu-all', {
             title: 'All Waifu',
             allWaifu,
             allDateTime,
@@ -254,7 +254,7 @@ class WaifuController {
             waifu_id: req.params.id,
         }
         const detailWaifu = await waifuModel.findById(id);
-        res.render('routes/waifu-detail', {
+        res.render('routes/waifu/waifu-detail', {
             title: 'Detail waifu',
             detailWaifu,
         });
@@ -269,7 +269,7 @@ class WaifuController {
         const allHairType = await hairTypeModel.find();
         const popularTags = await tagModel.getPopular();
 
-        return res.render('routes/waifu-all', {
+        return res.render('routes/waifu/waifu-all', {
             title: 'All Waifu',
             allWaifu : filterWaifu,
             allDateTime,
