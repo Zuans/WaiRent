@@ -11,7 +11,7 @@ const terser = require('gulp-terser');
 const browsersync = require('browser-sync').create();
 
 function scssTask() {
-    return src('app/assets/scss/*.scss',{sourcemaps : true })
+    return src('app/assets/scss/**/*.scss',{sourcemaps : true })
                 .pipe(sass())
                 .pipe(postcss([cssnano()]))
                 .pipe(dest('server/public/assets/css', { sourcemaps : '.'}));

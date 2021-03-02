@@ -1,0 +1,30 @@
+- var baseURL = `http://localhost:8000`
+- var baseAssets = `${baseURL}/assets`
+
+
+doctype html
+html
+    head
+        meta( charset="UTF-8" )
+        meta( name="viewport" content="width=device-width,initial-scale=1.0" )
+        title WaiRent | #{title}
+        link(rel="stylesheet", href=`${baseAssets}/css/auth-style/auth-form.css`)
+        link(rel="stylesheet", href=`${baseAssets}/css/auth-style/signup.css`)
+        script( src="https://kit.fontawesome.com/f40c32a411.js" crossorigin="anonymous" )
+    body   
+        section#content
+            | <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#273036" fill-opacity="1" d="M0,256L40,245.3C80,235,160,213,240,186.7C320,160,400,128,480,144C560,160,640,224,720,250.7C800,277,880,267,960,245.3C1040,224,1120,192,1200,181.3C1280,171,1360,181,1400,186.7L1440,192L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
+            form( action=`${baseURL}/api/wairent/v1/auth/login` method="")
+                h3.title-form Welcome
+                .input-group
+                    input( type="text" name="email" id="email"   autocomplete="off" required)
+                    i.fas.fa-at.icon-input
+                    label Email
+                .input-group
+                    input( type="password" name="password" id="password"  autocomplete="off" required)
+                    i.fas.fa-lock.icon-input
+                    i#show-password-icon.fas.fa-eye
+                    label Password
+                a(href="/").forgot-password forgot password ?
+                button( role="submit").btn-submit Login
+    script(src = `${baseAssets}/js/showPassword.js`)  

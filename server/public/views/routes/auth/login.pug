@@ -1,0 +1,36 @@
+- var baseURL = `http://localhost:8000`
+- var baseAssets = `${baseURL}/assets`
+
+
+doctype html
+html
+    head
+        meta( charset="UTF-8" )
+        meta( name="viewport" content="width=device-width,initial-scale=1.0" )
+        title WaiRent | #{title}
+        link(rel="stylesheet", href=`${baseAssets}/css/auth-style/login.css`)
+        script( src="https://kit.fontawesome.com/f40c32a411.js" crossorigin="anonymous" )
+    body   
+        section#content
+            div.block-wrapper.block-wrapper-left
+                div.block.block-1
+                div.block.block-2
+                div.block.block-3
+            form( action=`${baseURL}/api/wairent/v1/auth/login` method="")
+                h3.title-form Welcome
+                .input-group
+                    input( type="text" name="email" id="email"   autocomplete="off" required)
+                    i.fas.fa-at.icon-input
+                    label Email
+                .input-group
+                    input( type="password" name="password" id="password"  autocomplete="off" required)
+                    i.fas.fa-lock.icon-input
+                    i#show-password-icon.fas.fa-eye
+                    label Password
+                a(href="/").forgot-password forgot password ?
+                button( role="submit").btn-submit Login
+            div.block-wrapper.block-wrapper-right
+                div.block.block-1
+                div.block.block-2
+                div.block.block-3
+    script(src = `${baseAssets}/js/showPassword.js`)  

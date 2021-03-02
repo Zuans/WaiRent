@@ -1,0 +1,2 @@
+const passwordIcon=document.getElementById("show-password-icon"),passwordInput=document.getElementById("password");passwordIcon.addEventListener("click",(function(){if(passwordInput.value.length<=0)return!1;passwordIcon.classList.contains("fa-eye")?(passwordIcon.classList.remove("fa-eye"),passwordIcon.classList.add("fa-eye-slash"),passwordInput.setAttribute("type","text")):(passwordIcon.classList.remove("fa-eye-slash"),passwordIcon.classList.add("fa-eye"),passwordInput.setAttribute("type","password"))}));
+//# sourceMappingURL=showPassword.js.map
