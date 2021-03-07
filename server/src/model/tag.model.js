@@ -8,7 +8,8 @@ class TagModel {
         this.allTag = [];
     }
 
-    async setPopular() {
+
+    async getAllTag() {
         const tags = Object.keys(classTags); 
         const allTag = await Promise.all( tags.map(async (tag) => {
             // desctruc selected tags and get info table
@@ -59,7 +60,7 @@ class TagModel {
             return result;
         });
         this.allTag = allTag;
-        return true;
+        return allTag;
     }
 
     sortPopular(limit = 5 ) {
@@ -79,7 +80,7 @@ class TagModel {
 
 
     async getPopular() {
-        await this.setPopular();
+        await this.getAllTag();
         const popularTag = this.sortPopular(3);
         return popularTag;
     }

@@ -6,13 +6,11 @@ dotenv.config();
 
 const auth = (...roles) => {
     return async function(req,res,next) {
-        const authHeader = req.headers.authorization;
+        const token = req.cookies.token;
         try {
-            if(!authHeader) throw new HttpException(401,'Access Denied  no credential available');
-            const token = authHeader.split(" ")[1];
-            const JWTSecret = process.env.JWT_SECRET;
-            const decoded = jwt.verify(token,JWTSecret);
-            const user = userModel.findOne({ id : decoded.user_id });
+            if(!token) throw new HttpException(401,'Access Denied  no credential available');
+            const user = await userModel.findByJWT(token);
+            console.log(user);
             if (!user) {
                 throw new HttpException(401,'Authentication Failed');
             }
@@ -26,6 +24,7 @@ const auth = (...roles) => {
             req.currentUser = user;
             next();
         } catch(err) {
+            console.log(err);
             err.status = 401;
             next(err)
         }

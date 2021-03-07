@@ -2,10 +2,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 const userModel = require('../model/user.model');
 const HttpException = require('../utils/HttpExeception.utils');
 const { createHashPassword,checkValidation } = require('../utils/common.utils');
+const { Result } = require('express-validator');
 
 
 class UserController {
@@ -56,27 +56,21 @@ class UserController {
 
         // user matched make JWT token
         const secretKey = process.env.JWT_SECRET || "";
-        const token = jwt.sign({user_id : user.id.toString() },secretKey,{
-            expiresIn : '1h',
-        });
-
-        const {
-            password : userPassword,
-            ...userWithoutPass} = user;
-
+        const token = jwt.sign({
+                user_id : user.id.toString(),
+                user_role : user.role 
+            },secretKey,{ expiresIn : '1h' });
         
+        // send cookie
+        res.cookie("token",token,{ maxAge : 1000 * 60 * 60 * 24, httpOnly : true });
+
         res.status(200).send({
-            user: userWithoutPass,
-            token : token,
             msg : 'Success login',
+            status : "success",
         });
     }
 
     
-    signup(req,res)  {
-        res.status(200).send('ini adalah halaman signup');
-        // Render signup page
-    }
 
     async create(req,res,next)  {
         checkValidation(req);
@@ -84,15 +78,29 @@ class UserController {
         req.body.role = !req.body.role ? 'User' : req.body.role;
         const hashPassword = await createHashPassword(req.body.password);
         req.body.password = hashPassword;
-        console.log(req.body);
         const created = await userModel.create(req.body);
         // Check if created us success;
         if(!created) {
             throw new HttpException(500,'Something went wrong');
         }
+
+        const user =  await UserController.getUserByEmail(req.body.email);
+
+        const secretKey = process.env.JWT_SECRET || " ";
+        const token  = jwt.sign({
+            user_id : user.id.toString(),
+            user_role : user.role
+        },secretKey,{ expiresIn : "1h" });
+
+        // send cookie
+        res.cookie("token",token,{ maxAge : 1000 * 60 * 60 * 24, httpOnly : true });
+
         res.status(200).send({
-            message : "Data Berhasil dibuat",
+            user,
+            token,
+            message : "User has benn created",
             data : null,
+            status : "success",
         });
     }
 

@@ -16,21 +16,29 @@ html
                 div.block.block-1
                 div.block.block-2
                 div.block.block-3
-            form( action=`${baseURL}/api/wairent/v1/auth/login` method="")
+            form( action="" id="form-login" method="")
                 h3.title-form Welcome
                 .input-group
-                    input( type="text" name="email" id="email"   autocomplete="off" required)
-                    i.fas.fa-at.icon-input
-                    label Email
+                    .input-field-wrapper
+                        input( type="text" name="email" id="email"   autocomplete="off" required)
+                        i.fas.fa-at.icon-input
+                        label Email
+                    .error-wrapper#error-email
                 .input-group
-                    input( type="password" name="password" id="password"  autocomplete="off" required)
-                    i.fas.fa-lock.icon-input
-                    i#show-password-icon.fas.fa-eye
-                    label Password
-                a(href="/").forgot-password forgot password ?
+                    .input-field-wrapper
+                        input( type="password" name="password" id="password"  autocomplete="off" required)
+                        i.fas.fa-lock.icon-input
+                        i#password-icon.fas.fa-eye.icon-show 
+                        label Password
+                    .error-wrapper#error-password
+                div.error-wrapper#error-login
+                .help-link
+                    a(href=`${baseURL}/auth/forgot-password`).forgot-password forgot password ?
+                    a(href=`${baseURL}/auth/sign-up`).dont-have-account don't have an account?
                 button( role="submit").btn-submit Login
             div.block-wrapper.block-wrapper-right
                 div.block.block-1
                 div.block.block-2
                 div.block.block-3
-    script(src = `${baseAssets}/js/showPassword.js`)  
+    script(src = `${baseAssets}/js/showPassword.js`)
+    script(src = `${baseAssets}/js/authFormHandler.js`)    

@@ -7,12 +7,21 @@ nav
             li.nav-item
                 a(href = "/waifu") Waifu
             li.nav-item
-                A(href = "/cart") Cart
+                a(href = "/cart") Cart
+            if user
+                li.nav-item
+                    a(href = `${baseURL}/user/profile`) Profile
         ul.nav-list-auth
-            li
-                a( href="/auth/sign-up").btn-signup Sign Up
-            li
-                a( href="/auth/login").btn-login Login
+            if !user            
+                li
+                    a( href="/auth/sign-up").btn-signup Sign Up
+                li
+                    a( href="/auth/login").btn-login Login
+            else 
+                li
+                    p.username Hi,#{user["username"]}
+                li 
+                    a( href="/auth/logout").btn-logout Logut
     div.hamburger-wrapper
         button#act-nav
             div

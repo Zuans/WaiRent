@@ -4,6 +4,7 @@ function errorMiddleware(error,req,res,next) {
         message, 
         data 
     } = error;
+    
 
     console.log(`[Error] : ${error}`);
 

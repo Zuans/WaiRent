@@ -5,16 +5,18 @@ const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middle
 const {
     waifuFilterSchema
 } = require('../../middleware/validators/waifuValidator.middleware');
+const auth  = require("../../middleware/auth.middleware");
+
 
 router.get('/',awaitHandlerFactory(WaifuController.showAll));
 
-router.get('/tag/:tagType/:tagValue', awaitHandlerFactory(WaifuController.showTags));
+router.get('/tag/:tagType/:tagValue',awaitHandlerFactory(WaifuController.showTags));
 
 router.get("/hair-length/:lengthType",awaitHandlerFactory(WaifuController.showHairLen));
 
 router.post('/filter',awaitHandlerFactory(WaifuController.showFilter));
 
-router.get('/:id', awaitHandlerFactory(WaifuController.showDetail));
+router.get('/:id',awaitHandlerFactory(WaifuController.showDetail));
 
 
 

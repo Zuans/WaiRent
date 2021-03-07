@@ -13,18 +13,50 @@ html
         script( src="https://kit.fontawesome.com/f40c32a411.js" crossorigin="anonymous" )
     body   
         section#content
-            | <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#273036" fill-opacity="1" d="M0,256L40,245.3C80,235,160,213,240,186.7C320,160,400,128,480,144C560,160,640,224,720,250.7C800,277,880,267,960,245.3C1040,224,1120,192,1200,181.3C1280,171,1360,181,1400,186.7L1440,192L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
-            form( action=`${baseURL}/api/wairent/v1/auth/login` method="")
+            | <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f55e90" fill-opacity="1" d="M0,32L20,53.3C40,75,80,117,120,138.7C160,160,200,160,240,154.7C280,149,320,139,360,117.3C400,96,440,64,480,80C520,96,560,160,600,154.7C640,149,680,75,720,58.7C760,43,800,85,840,96C880,107,920,85,960,90.7C1000,96,1040,128,1080,144C1120,160,1160,160,1200,144C1240,128,1280,96,1320,90.7C1360,85,1400,107,1420,117.3L1440,128L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"></path></svg>
+            form( action="" id="form-signup" method="")
                 h3.title-form Welcome
-                .input-group
-                    input( type="text" name="email" id="email"   autocomplete="off" required)
-                    i.fas.fa-at.icon-input
-                    label Email
-                .input-group
-                    input( type="password" name="password" id="password"  autocomplete="off" required)
-                    i.fas.fa-lock.icon-input
-                    i#show-password-icon.fas.fa-eye
-                    label Password
-                a(href="/").forgot-password forgot password ?
+                .input-wrapper
+                    .input-group
+                        div.input-field-wrapper
+                            input( type="text" name="email" id="email"   autocomplete="off" required)
+                            i.fas.fa-at.icon-input
+                            label Email
+                        div.error-wrapper#error-email
+                    .input-group
+                        div.input-field-wrapper
+                            input( type="password" name="password" id="password"  autocomplete="off" required)
+                            i.fas.fa-lock.icon-input
+                            i#password-icon.fas.fa-eye.icon-show 
+                            label Password
+                        div.error-wrapper#error-password
+                    .input-group
+                        div.input-field-wrapper
+                            input( type="password" name="confirm-password" id="confirm-password"  autocomplete="off" required)
+                            i.fas.fa-lock.icon-input
+                            i#confirm-password-icon.fas.fa-eye.icon-show 
+                            label Confirm Password
+                        div.error-wrapper#error-confirmPassword
+                    .input-group
+                        div.input-field-wrapper
+                            input( type="text" name="username" id="username"   autocomplete="off" required)
+                            i.fas.fa-at.icon-input
+                            label Username
+                        div.error-wrapper#error-username
+                    .input-group
+                        div.input-field-wrapper
+                            input( type="number" name="age" id="age"  autocomplete="off" required)
+                            i.fas.fa-lock.icon-input
+                            label Age
+                        div.error-wrapper#error-age
+                    .input-group-select
+                        ul#selected-tags
+                        select( name="tag-selector" class="tag-selector" id="tag-selector")
+                            option(value ="") Select fav tags ( max 3)
+                            each tag in allTag
+                                option(value =`${tag["tag_type"]}-${tag["tag_id"]}`) #{tag["tag_name"]}
+                div.error-wrapper#error-signup
                 button( role="submit").btn-submit Login
-    script(src = `${baseAssets}/js/showPassword.js`)  
+    script(src = `${baseAssets}/js/showPassword.js`)
+    script(src = `${baseAssets}/js/tagSelector.js`)  
+    script(src = `${baseAssets}/js/authFormHandler.js`) 

@@ -12,13 +12,13 @@ const UserController = require('../../controller/user.controller');
 const awaitHandlerFactory = require('../../middleware/awaitHandlerFactory.middleware');
 
 
-router.get('/login',auth('Admin'),UserController.login);
-
 router.post('/login',loginUserSchema,awaitHandlerFactory(UserController.auth));
 
-router.get('/signup',UserController.signup);
-
 router.post('/signup',createUserSchema,awaitHandlerFactory(UserController.create));
+
+router.post("/test",auth("user"),(req,res) => {
+    res.send("mantab");
+})
 
 router.delete('/delete/:id',awaitHandlerFactory(UserController.delete));
 

@@ -1,5 +1,6 @@
 // Model
 const waifuModel = require('../model/waifu.model');
+const userModel = require("../model/user.model");
 const dateTimeModel = require('../model/dateTime.model');
 const hairTypeModel = require('../model/hairType.model');
 const hobbyModel = require('../model/hobby.model');
@@ -157,6 +158,7 @@ class WaifuController {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
         const popularTags = await tagModel.getPopular();
+        const user = req.cookies.token ? await userModel.findByJWT(req.cookies.token) : null;
 
         // Check method GET
             const allWaifu = await waifuModel.find();
@@ -167,6 +169,7 @@ class WaifuController {
                     allDateTime,
                     allHairType,
                     popularTags,
+                    user,
                 })
             }
 
@@ -176,6 +179,7 @@ class WaifuController {
                 allDateTime,
                 allHairType,
                 popularTags,
+                user,
                 errors: null
             });
     }
@@ -194,7 +198,7 @@ class WaifuController {
         const popularTags = await tagModel.getPopular();
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
-
+        const user = req.cookies.token ? await userModel.findByJWT(req.cookies.token) : null;
 
 
 
@@ -225,6 +229,7 @@ class WaifuController {
             allDateTime,
             allHairType,
             popularTags,
+            user,
             errors: null,
             searchMsg : `result search for tag type "${tagName}"`
         });
@@ -236,6 +241,7 @@ class WaifuController {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
         const allWaifu = await waifuModel.findByHairLength(lengthType);
+        const user = req.cookies.token ? await userModel.findByJWT(req.cookies.token) : null;
 
 
         return res.render('routes/waifu/waifu-all', {
@@ -244,6 +250,7 @@ class WaifuController {
             allDateTime,
             allHairType,
             popularTags,
+            user,
             errors: null,
             searchMsg : `result search for hair-length "${lengthType}"`
         });
@@ -268,6 +275,7 @@ class WaifuController {
         const allDateTime = await dateTimeModel.find();
         const allHairType = await hairTypeModel.find();
         const popularTags = await tagModel.getPopular();
+        const user = req.cookies.token ? await userModel.findByJWT(req.cookies.token) : null;
 
         return res.render('routes/waifu/waifu-all', {
             title: 'All Waifu',
@@ -275,6 +283,7 @@ class WaifuController {
             allDateTime,
             allHairType,
             popularTags,
+            user,
             errors: null,
             searchMsg : `search result from filter "form"`
         });

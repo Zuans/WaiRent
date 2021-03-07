@@ -5,8 +5,8 @@ const createUserSchema = [
     check('username')
         .exists()
         .withMessage('Username field is required')
-        .isLength({ min : 6 })
-        .withMessage('Username input must be great than six character'),
+        .isLength({ min : 2 })
+        .withMessage('Username input must be great than two character'),
     check('email')
         .exists()
         .withMessage('Email field is required')
@@ -24,7 +24,7 @@ const createUserSchema = [
         .withMessage('Your password must contains at least 6 character')
         .isLength({ max : 12 })
         .withMessage('Password can contain max 12 character'),
-    check('confirm_password')
+    check('confirmPassword')
         .exists()
         .withMessage('Confirm password field is required')
         .custom(( value,{req} ) => value === req.body.password )
