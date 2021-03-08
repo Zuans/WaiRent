@@ -10,7 +10,7 @@ nav
                 a(href = "/cart") Cart
             if user
                 li.nav-item
-                    a(href = `${baseURL}/user/profile`) Profile
+                    a(href = `${baseURL}/profile`) Profile
         ul.nav-list-auth
             if !user            
                 li
@@ -21,7 +21,8 @@ nav
                 li
                     p.username Hi,#{user["username"]}
                 li 
-                    a( href="/auth/logout").btn-logout Logut
+                    a( href="/auth/logout").btn-logout
+                        i.fas.fa-sign-out-alt
     div.hamburger-wrapper
         button#act-nav
             div

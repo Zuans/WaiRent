@@ -1,5 +1,5 @@
 const { classTags } = require('../utils/tags.utils');
-const query = require('../db/conn');
+const query = require('../db/conn')
 
 class TagModel {
 
@@ -60,6 +60,22 @@ class TagModel {
             return result;
         });
         this.allTag = allTag;
+        return allTag;
+    }
+
+
+    async findTags(tags) {
+        const allTag = await Promise.all( tags.map( async(tag) => {
+            const tagType = tag.toString().split("-")[0];
+            const tagID = tag.toString().split("-")[1];
+            const {
+                class : model,
+                method : methodName,
+                columnVal
+            } = classTags[tagType];
+            const result =  await model[methodName](tagID);
+            return result[columnVal];
+        }))
         return allTag;
     }
 

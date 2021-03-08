@@ -47,7 +47,7 @@ class UserModel extends BaseModel {
             const {password,...userWithoutPass} = user;
             return userWithoutPass;
         } catch(err) {
-            next(err);
+            console.log(err)
         }
     }
 

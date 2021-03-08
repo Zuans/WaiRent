@@ -1,0 +1,23 @@
+extends ../../layout/body.pug
+
+block append styles
+    link(rel="stylesheet", href=`${baseAssets}/css/profile/profile.main.css`)
+
+block content
+    section#content 
+        h1.main-title Main Profile
+        div.main-profile
+            h3.greet-user #{user.username}
+            p.email #{user.email}
+            p.age #{user.age}
+            p.balance IDR 500k
+            ul.favorite-tag-list
+                each tag in user.tags
+                    li #{tag}
+        ul.action-profile
+            li
+                button.btn-action Change Password
+            li
+                button.btn-action Edit Profile
+            li
+                button.btn-action History
