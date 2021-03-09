@@ -15,10 +15,10 @@ class UserModel extends BaseModel {
         super(tableName);
     }
 
-    async create({username,email,role,password,favTag}) {
-        let valCol = [username,email,role,password];
+    async create({username,email,role,password,age,favTag}) {
+        let valCol = [username,email,role,password,age];
         if(!favTag.length) {
-            const sql = `INSERT INTO ${this.tableName} (username,email,role,password) VALUES (?,?,?,?)`;
+            const sql = `INSERT INTO ${this.tableName} (username,email,role,password,age) VALUES (?,?,?,?,?)`;
             const result = await query(sql,[username,email,role,password]);
             const affectedRows = result ? result.affectedRows : 0;
             return affectedRows;
@@ -30,7 +30,7 @@ class UserModel extends BaseModel {
         // tagValue tu insert in database then concat with valCol variable
         const tagVal = favTag.map( tag => tag.value);
         // insert to database
-        const sql = `INSERT INTO ${this.tableName} (username,email,role,password,${tagCol}) VALUES (?,?,?,?,${tagQmark})`;
+        const sql = `INSERT INTO ${this.tableName} (username,email,role,password,age,${tagCol}) VALUES (?,?,?,?,?,${tagQmark})`;
         console.log(sql);
         valCol = valCol.concat(tagVal);
         console.log(valCol);
