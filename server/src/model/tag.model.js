@@ -73,8 +73,12 @@ class TagModel {
                 method : methodName,
                 columnVal
             } = classTags[tagType];
-            const result =  await model[methodName](tagID);
-            return result[columnVal];
+            const row =  await model[methodName](tagID);
+            const result = {
+                type : tagType,
+                name : row[columnVal],
+            }
+            return result;
         }))
         return allTag;
     }

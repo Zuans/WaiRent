@@ -59,7 +59,7 @@ class UserController {
         const token = jwt.sign({
                 user_id : user.id.toString(),
                 user_role : user.role 
-            },secretKey,{ expiresIn : '1h' });
+            },secretKey,{ expiresIn : '1d' });
         
         // send cookie
         res.cookie("token",token,{ maxAge : 1000 * 60 * 60 * 24, httpOnly : true });

@@ -31,9 +31,7 @@ class UserModel extends BaseModel {
         const tagVal = favTag.map( tag => tag.value);
         // insert to database
         const sql = `INSERT INTO ${this.tableName} (username,email,role,password,age,${tagCol}) VALUES (?,?,?,?,?,${tagQmark})`;
-        console.log(sql);
         valCol = valCol.concat(tagVal);
-        console.log(valCol);
         const result = await query(sql,valCol);
         const affectedRows = result ? result.affectedRows : 0;
         return affectedRows;

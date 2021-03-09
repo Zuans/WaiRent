@@ -16,16 +16,18 @@ block content
                     li.favorite-tags
                         h3 Favorite Tags
                     each tag in user.tags
-                        li.item-link #{tag}
-                    li.edit-tags.item-link Edit Tag
-                        i.far.fa-edit.action-icon
+                        li.item-link 
+                            a(href=`${baseURL}/waifu/tag/${tag.type}/${tag.name}`) #{tag.name}
+                    li.edit-tags.item-link
+                        a(href="/profile/edit-tag")
+                            i.far.fa-edit.action-icon
             ul.action-profile
                 li
-                    button.btn-action.item-link Change Password
+                    a(href="/profile/change-password").btn-action.item-link Change Password
                         i.fas.fa-lock.action-icon
-                li
-                    button.btn-action.item-link Edit Profile
+                li 
+                    a(href="/profile/edit").btn-action.item-link Edit Profile
                         i.fas.fa-edit.action-icon
-                li
-                    button.btn-action.item-link History
+                li 
+                     a(href="/profile/history").btn-action.item-link History
                         i.fas.fa-history.action-icon
