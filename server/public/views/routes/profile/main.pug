@@ -6,18 +6,26 @@ block append styles
 block content
     section#content 
         h1.main-title Main Profile
-        div.main-profile
-            h3.greet-user #{user.username}
-            p.email #{user.email}
-            p.age #{user.age}
-            p.balance IDR 500k
-            ul.favorite-tag-list
-                each tag in user.tags
-                    li #{tag}
-        ul.action-profile
-            li
-                button.btn-action Change Password
-            li
-                button.btn-action Edit Profile
-            li
-                button.btn-action History
+        div.container-left
+            div.main-profile
+                h3.greet-user Welcome, #{user.username}
+                p.email #{user.email}
+                p.age #{user.age}
+                p.balance IDR 500k
+                ul.favorite-tag-list
+                    li.favorite-tags
+                        h3 Favorite Tags
+                    each tag in user.tags
+                        li.item-link #{tag}
+                    li.edit-tags.item-link Edit Tag
+                        i.far.fa-edit.action-icon
+            ul.action-profile
+                li
+                    button.btn-action.item-link Change Password
+                        i.fas.fa-lock.action-icon
+                li
+                    button.btn-action.item-link Edit Profile
+                        i.fas.fa-edit.action-icon
+                li
+                    button.btn-action.item-link History
+                        i.fas.fa-history.action-icon
