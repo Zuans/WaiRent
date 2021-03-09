@@ -65,21 +65,26 @@ class TagModel {
 
 
     async findTags(tags) {
-        const allTag = await Promise.all( tags.map( async(tag) => {
-            const tagType = tag.toString().split("-")[0];
-            const tagID = tag.toString().split("-")[1];
-            const {
-                class : model,
-                method : methodName,
-                columnVal
-            } = classTags[tagType];
-            const row =  await model[methodName](tagID);
-            const result = {
-                type : tagType,
-                name : row[columnVal],
-            }
-            return result;
-        }))
+        const allTag = await Promise.all( tags.filter( tag => tag !==  null ))
+            .then( tags => {
+                tags.map( async(tag) => {
+                    console.log(tagType);
+                    console.log(tagID);
+                    const tagType = tag.toString().split("-")[0];
+                    const tagID = tag.toString().split("-")[1];
+                    const {
+                        class : model,
+                        method : methodName,
+                        columnVal
+                    } = classTags[tagType];
+                    const row =  await model[methodName](tagID);
+                    const result = {
+                        type : tagType,
+                        name : row[columnVal],
+                    }
+                    return result;
+                })
+            });
         return allTag;
     }
 
