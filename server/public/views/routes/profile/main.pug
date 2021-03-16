@@ -8,31 +8,98 @@ block content
         h1.main-title Main Profile
         div.container-left
             div.main-profile
-                h3.greet-user Welcome, #{user.username}
-                p.email #{user.email}
-                p.age #{user.age}
-                p.balance IDR 500k
+                div.greet-user
+                    h3 Welcome, #{user.username}
+                    a(href=`${baseURL}/profile/topup`).top-up-btn Top Up      
+                        i.fas.fa-plus        
+                div.email 
+                    p.item-title Email
+                    p.item-value #{user.email}
+                div.age 
+                    p.item-title Age
+                    p.item-value #{user.age} years old
+                div.balance 
+                    p.item-title Balance
+                    p.item-value IDR 500k
                 ul.favorite-tag-list
                     li.favorite-tags
                         h3 Favorite Tags
                         if user.tags
                             each tag in user.tags
                                 li.item-link 
-                                    a(href=`${baseURL}/waifu/tag/${tag.type}/${tag.name}`) #{tag.name}
+                                    a(href=`${baseURL}/waifu/tag/${tag.value}/${tag.name}`) #{tag.name}
                             li.edit-tags.item-link
-                                a(href="/profile/edit-tag")
-                                    i.far.fa-edit.action-icon
-                        else 
-                            li.edit-tags.item-link 
-                                a(href="/profile/edit-tag") Add Tag
-                                    i.fas.fa-plus.action-icon
+                                a.btn-action(data-btn-form="form-add-tag")
+                                     i.far.fa-edit.action-icon(data-btn-form="form-add-tag") 
             ul.action-profile
                 li
-                    a(href="/profile/change-password").btn-action.item-link Change Password
+                    button.item-link.btn-action(data-btn-form="form-change-password") Change Password
                         i.fas.fa-lock.action-icon
                 li 
-                    a(href="/profile/edit").btn-action.item-link Edit Profile
+                    button.item-link.btn-action(data-btn-form="form-edit-profile") Edit Profile
                         i.fas.fa-edit.action-icon
                 li 
-                     a(href="/profile/history").btn-action.item-link History
+                    button.item-link.btn-action(data-btn-form="form-history") History
                         i.fas.fa-history.action-icon
+        div.container-right
+            .show-content
+                div.intro-content.content-wrapper
+                    h2 Form Edit
+                    p you can change your profile, password, favorite tags etc here
+                    button.btn-submit.btn-action(data-btn-form="form-add-tag") Go Edit 
+            .content-wrapper.add-tag-wrapper.hide-wrapper(data-form="form-add-tag")
+                h2.title-content Edit Tag
+                ul.tag-list
+                    .tag-selector-wrapper
+                        select( name="tag-select" id="tag-selector")
+                            option(value="") Select tag (max 3)
+                            each tag in allTag
+                                option(value=`${tag["tag_type"]}-${tag["tag_id"]}`) #{tag["tag_name"]}
+                    .tag-items-wrapper#selected-tags
+                    p#alert-update-tag.alert
+                    button.btn-submit#btn-edit-tag Edit
+            .content-wrapper.change-password-wrapper.hide-wrapper(data-form="form-change-password")
+                h2.title-content  Change Password
+                form(action="" method="post")#form-change-password
+                    .input-group
+                        label(for="current-password") Current password
+                        input( type="password" id="current-password" name="current-password")
+                        div#err-change-pass-current-password.error-input
+                    .input-group
+                        label(for="new-password") New password
+                        input( type="password" id="new-password" name="new-password")
+                        div#err-change-pass-new-password.error-input
+                    .input-group
+                        label(for="confirm-password") Confirm password
+                        input( type="password" id="confirm-password" name="current-password")
+                        div#err-change-pass-confirm-password.error-input
+                    div#alert-change-password.alert
+                    button( role="submit").btn-submit Submit
+            .content-wrapper.edit-profile-wrapper.hide-wrapper(data-form="form-edit-profile")
+                h2.title-content Edit Profile
+                form#change-profile(action="PATCH")
+                    div.input-group
+                        label(for="username") Username
+                        input(type="text" id="username" name="username")
+                        div#err-edit-profile-username.error-input
+                    div.input-group
+                        label(for="email") Email
+                        input(type="email" id="email" name="email")
+                        div#err-edit-profile-email.error-input
+                    div.input-group
+                        label(for="password") Password
+                        input(type="password" id="password" name="password")
+                        div#err-edit-profile-password.error-input
+                    div.input-group
+                        label(for="age") Age
+                        input(type="number" id="age" name="age")
+                        div#err-edit-profile-age.error-input
+                    div#alert-edit-profile.alert
+                    button( role="submit").btn-submit Submit
+            .content-wrapper.history-wrapper.hide-wrapper(data-form="form-history")
+                h2.title-content History
+block append endScripts
+    script( src=`${baseAssets}/js/constant.js`)
+    srcipt( src=`${baseAssets}/js/showPassword.js`)
+    script( src=`${baseAssets}/js/tagSelector.js`)
+    script( src=`${baseAssets}/js/editProfile.js`)
