@@ -5,7 +5,10 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../model/user.model');
 const HttpException = require('../utils/HttpExeception.utils');
 const { createHashPassword,checkValidation } = require('../utils/common.utils');
-const { Result } = require('express-validator');
+const { Result, query, body } = require('express-validator');
+const { sendResponses } = require("../utils/common.utils");
+const tagModel = require('../model/tag.model');
+const { all } = require('../routes/api_v1/userRoutes');
 
 
 class UserController {
@@ -117,6 +120,71 @@ class UserController {
         });
     }
 
+
+    async update(req,res) {
+        checkValidation(req);
+        // compare input password and password from DB 
+        const {
+            password,
+            ...userWithoutPass
+        } =  req.body;
+        const { id : userId } = req.currentUser;
+        const user = await userModel.findById({ id : userId });
+        const isCorrectPassword = await bcrypt.compare(password,user.password);
+        if(!isCorrectPassword) throw new HttpException(401,"Incorrect Password");
+
+        // Create hashPassword and replace req.body.password
+        const hashPassword = await createHashPassword(password);
+        req.body.password = hashPassword;
+
+        // Update user
+        const updatedUser = await userModel.updateById(req.body,{ id : userId });
+        if(!updatedUser) throw new HttpException(500);
+
+        sendResponses(res,null,"Edit Profile success");
+    }
+
+    async getTag(req,res) {
+        const  { id : userId } = req.currentUser;
+        const rawTags = await userModel.getFavTagById(userId);
+        const tagsVal = Object.values(rawTags).filter( tag => tag !==  null );
+        const tags = await tagModel.findTags(tagsVal);
+        const allTag = tagsVal.map((tag,index) => {
+            return {
+                value : tag,
+                name : tags[index].name,
+            }
+        });
+        sendResponses(res,allTag);
+    }
+
+    async changeTag(req,res) {
+        const { id : userId } = req.currentUser;
+        if(!userId) throw new HttpException(401,"Unauthorized");
+        const {allTag} = req.body;
+        const result = await userModel.changeFavTag(userId,allTag);
+        if(!result) throw new HttpException(500);
+        sendResponses(res,"Favorite tag has updated");
+    }
+
+    async changePassword(req,res) {
+        // Check validatio from express-validator
+        checkValidation(req);
+
+        const currentPass = req.body["current-password"];
+        const newPass = req.body["new-password"];
+
+        const { id : userId } = req.currentUser;
+        const user = await userModel.findById({ id : userId });
+        //  Validation for password and create password
+        const isPasswordSame = await bcrypt.compare(currentPass,user.password);
+        if(!isPasswordSame) throw new HttpException(401,'Incorrect Password'); 
+        const hashPassword = await createHashPassword(newPass);
+        // Change password
+        const result = await userModel.changePassword(hashPassword,userId);
+        if(!result) throw new HttpException(500);
+        sendResponses(res,null,"Password has changed");
+    }
 
 
 }

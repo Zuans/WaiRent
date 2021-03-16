@@ -10,7 +10,6 @@ const auth = (...roles) => {
         try {
             if(!token) throw new HttpException(401,'Access Denied  no credential available');
             const user = await userModel.findByJWT(token);
-            console.log(user);
             if (!user) {
                 throw new HttpException(401,'Authentication Failed');
             }

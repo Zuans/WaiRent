@@ -37,12 +37,12 @@ const checkValidation = (req) => {
     return true;
 }
 
-const sendResponses = (res, data = null, msg = '', statusCode = 200, statusMsg = 'success') => {
+const sendResponses = (res, data = null, msg = '', statusCode = 200, type = "success" , statusMsg = 'success') => {
     return res.status(statusCode).send({
         status: statusMsg,
         data,
-        msg: msg,
-        error : null
+        message: msg,
+        type : type,
     });
 }
 

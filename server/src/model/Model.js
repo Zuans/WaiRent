@@ -9,6 +9,18 @@ class BaseModel {
     }
 
 
+    parsingRow(data) {
+        return JSON.parse(JSON.stringify(data));
+    }
+
+    parsingRows(data) {
+        const allData = [];
+        data.map(d => {
+            const parseRow = this.parsingRow(d);
+            allData.push(...parseRow);
+        });
+        return allData;
+    }
 
     async find(params ={}) {
         let sql = `SELECT * FROM ${this.tableName}`;

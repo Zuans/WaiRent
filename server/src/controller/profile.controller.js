@@ -7,6 +7,7 @@ class ProfileController {
     async main(req,res) {
         const token = req.cookies.token || null;
         let user = token ? await userModel.findByJWT(token) : null;
+       
         const { 
             fav_tag_1,
             fav_tag_2,
@@ -17,8 +18,12 @@ class ProfileController {
         const favTags = [fav_tag_1,fav_tag_2,fav_tag_3];
         const tags = await tagModel.findTags(favTags);
         userProfile.tags = tags;
+
+        const allTag = await tagModel.getAllTag();
+
         res.render("routes/profile/main",{
             user : userProfile,
+            allTag
         });
     }
 

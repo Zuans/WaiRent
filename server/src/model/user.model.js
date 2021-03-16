@@ -6,6 +6,7 @@ require("dotenv").config();
 const { multipleColumnSet } = require('../utils/common.utils');
 // Base Model Class
 const BaseModel = require('../model/Model');
+const HttpException = require('../utils/HttpExeception.utils');
 
 
 class UserModel extends BaseModel {
@@ -48,6 +49,35 @@ class UserModel extends BaseModel {
             console.log(err)
         }
     }
+
+    async getFavTagById(userId) {
+        const sql =  `SELECT fav_tag_1, fav_tag_2, fav_tag_3 FROM ${this.tableName} WHERE id = ?`;
+        const resultRow = await query(sql,[userId]);
+        const result = this.parsingRow(resultRow[0]);
+        return result;
+    }
+
+    async changeFavTag(userId,allTag) {
+        const sql = `UPDATE users SET fav_tag_1 =  ?, fav_tag_2 = ?, fav_tag_3 = ? WHERE id = ${userId}`;
+        const values = [];
+        const countTag = 3;
+        for( let i = 0; i < countTag; i++ ) {
+            const val = allTag[i] ? allTag[i].value : null;
+            values.push(val);
+        };
+        console.log(values);
+        const result = await query(sql,values);
+        const affectedRows = result.affectedRows;   
+        return affectedRows;
+    }
+
+    async changePassword(password,userId) {
+        const sql = "UPDATE users SET password = ? WHERE id = ?";
+        const result = await query(sql,[password,userId]);
+        const affectedRows = result.affectedRows;
+        return affectedRows;
+    }
+
 
 }
 

@@ -4,7 +4,12 @@ const router = express.Router();
 
 
 // Import Middleware
-const { createUserSchema,loginUserSchema } = require('../../middleware/validators/userValidator.middleware');
+const { 
+    createUserSchema,
+    loginUserSchema, 
+    changePassSchema,
+    editProfileSchema
+} = require('../../middleware/validators/userValidator.middleware');
 const auth = require('../../middleware/auth.middleware');
 
 // Import Controlerr
@@ -16,9 +21,13 @@ router.post('/login',loginUserSchema,awaitHandlerFactory(UserController.auth));
 
 router.post('/signup',createUserSchema,awaitHandlerFactory(UserController.create));
 
-router.post("/test",auth("user"),(req,res) => {
-    res.send("mantab");
-})
+router.get('/tag',auth("user","admin"),awaitHandlerFactory(UserController.getTag));
+
+router.patch('/',auth("user","admin"),editProfileSchema,awaitHandlerFactory(UserController.update));
+
+router.patch("/tag",auth("user,admin"),awaitHandlerFactory(UserController.changeTag));
+
+router.patch("/password",changePassSchema,auth("user","admin"),awaitHandlerFactory(UserController.changePassword));
 
 router.delete('/delete/:id',awaitHandlerFactory(UserController.delete));
 
