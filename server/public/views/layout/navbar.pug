@@ -21,6 +21,9 @@ nav
                 li
                     p.username Hi,#{user["username"]}
                 li 
+                    a( href=`${baseURL}/profile/topup`).btn-top-up
+                        i.fas.fa-plus
+                li 
                     a( href="/auth/logout").btn-logout
                         i.fas.fa-sign-out-alt
     div.hamburger-wrapper

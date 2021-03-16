@@ -7,7 +7,6 @@ const awaitHandlerFactory =  require("../../middleware/awaitHandlerFactory.middl
 
 router.get("/",awaitHandlerFactory(ProfileController.main));
 
-router.get("/reset-password",awaitHandlerFactory(ProfileController.resetPassword));
 
 
 module.exports = router;

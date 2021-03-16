@@ -11,7 +11,7 @@ block content
             | <h3 class="translate-x" data-speed = "-0.45"> Lets rent your waifu or top waifu in <strong class="brand-title" >Wairent,</strong> </h3>          
             //- h3.translate-x(data-speed = "-0.45") Lets rent your waifu or top waifu in WaiRent
             p.translate-x(data-speed = "-0.3" ) WaiRent is a web for renting waifu this web was created inspired by Kanojo Okarishimasu
-            button.translate-y(data-speed = "0.4") Let's Rent
+            a(href=`${baseURL}/waifu` data-speed = "0.4" ).translate-y Let's Rent
         div.img
             img(src = "../assets/img/Char.png" class="translate-y" data-speed="0.2" alt="" )
             div.bottom-oval
@@ -33,10 +33,10 @@ block content
                                 while ratingIndex <= waifu['ratings']
                                     i.fas.fa-star( data-index = `${ratingIndex++}` )
                             div.tags
-                                p #{waifu['date_time']}
-                                p #{waifu['hair_type']}
-                                p #{waifu['hobby']}
-                                p #{waifu['hobby_2']}
+                                a(href=`${baseURL}/waifu/tag/date_time/${waifu['date_time']}`) #{waifu['date_time']}
+                                a(href=`${baseURL}/waifu/tag/hair_type/${waifu['hair_type']}`) #{waifu['hair_type']}
+                                a(href=`${baseURL}/waifu/tag/hobby/${waifu['hobby']}`) #{waifu['hobby']}
+                                a(href=`${baseURL}/waifu/tag/hobby/${waifu['hobby_2']}`) #{waifu['hobby_2']}
                             p.waifu-desc #{waifu['description']}
                         a.btn-detail( href= `/waifu/${waifu['waifu_id']}` ) See Detail
     section#choose-type
@@ -47,8 +47,6 @@ block content
             div.short-hair
                 h1.title-type Short Hair
                 a.hair-type-btn( href="/waifu/hair-length/short") Detail
-    if user
-        section#user
     section#testimoni
         h1.testimoni-title What Our Customers Say ?
         div.testimoni-wrapper

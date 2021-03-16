@@ -22,6 +22,7 @@ class ProfileController {
         const allTag = await tagModel.getAllTag();
 
         res.render("routes/profile/main",{
+            title : "Main Profile",
             user : userProfile,
             allTag
         });
