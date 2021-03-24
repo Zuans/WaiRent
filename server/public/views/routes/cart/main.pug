@@ -1,0 +1,53 @@
+extends ../../layout/body.pug
+
+
+block append styles
+    link(rel="stylesheet", href=`${baseAssets}/css/cart.main.css`)
+
+block append scripts   
+    script( src=`${baseAssets}/js/constant.js`)
+
+block append content
+    section#main 
+        h1.title-content Carts
+        .content-wrapper
+            div.card-cart-wrapper
+                each cart in carts
+                    div.card( id=`card-${cart["id"]}`)
+                        div.img-wrapper
+                            img(src=`${baseAssets}/img/asuna.png`, alt=`waifu-name`)
+                        div.card-details
+                            div.top-detail
+                                h3.waifu-name #{cart["waifu_name"]}
+                            div.date-wrapper
+                                h4.hours #{cart["hours"]}
+                                div.duration
+                                    button.changes-duration.minus-duration( data-id=`${cart.id}`)
+                                        i.fas.fa-minus
+                                    input( type="number" class="input-duration" value=`${cart["duration_hours"]}`  name=`duration-${cart.id}` id=`duration-${cart.id}` )
+                                    button.changes-duration.plus-duration( data-id=`${cart.id}`)
+                                        i.fas.fa-plus
+                                    button.delete-cart( data-cart-id=`${cart.id}`)
+                                        i.far.fa-trash-alt
+                                h4.start-date #{cart["fullDate"]}
+                            ul.list-tag
+                                li.tag-item #{cart["waifu_hair_type"]}
+                                li.tag-item #{cart["waifu_date_time"]}
+                                li.tag-item #{cart["waifu_hobby"]}
+                            h3( id=`waifu-price-${cart.id}` class="sub-price"  ) Rp.#{cart["waifu_price"] * cart["duration_hours"] }
+                            button.btn-rent-now  Rent now
+                        .select-wrapper
+                            input.select-cart(type="checkbox" id="select-cart" class="select-cart"  data-id=`${cart["id"]}` value=`cart-id`)
+            div.result-wrapper
+                h1.title-header Payment
+                div.order-count-wrapper 
+                    h3.title Order Count
+                    h4.order-count 3 Orders
+                div.total-price-wrapper 
+                    h3.title Total Price
+                    h4.total-price Rp.30000
+                button.btn-pay-order Pay now
+block append endScripts
+    script( src=`${baseAssets}/js/utils.js`)
+    script( src=`${baseAssets}/js/select-cart.js`)
+    script( src=`${baseAssets}/js/cart.main.js`)

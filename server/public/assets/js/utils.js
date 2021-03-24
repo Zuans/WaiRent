@@ -1,0 +1,2 @@
+const splitPrices=t=>{[...document.getElementsByClassName(t)].forEach((t=>splitPrice(t)))},splitPrice=t=>{const[e,s]=t.textContent.toString().split("."),n=[],c=s.length%3,i=s.slice(c,s.length);if(c>0){const t=s.slice(0,c);n.push(t)}for(let t=0;t<=s.length;t+=3){const e=i.slice(t,t+3);n.push(e)}const l=n.join(".");t.textContent=`${e}.${l}`};
+//# sourceMappingURL=utils.js.map
