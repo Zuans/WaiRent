@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { multipleColumnSet } = require('../utils/common.utils');
 // Base Model Class
-const BaseModel = require('../model/Model');
+const BaseModel = require('./Model');
 const HttpException = require('../utils/HttpExeception.utils');
 
 

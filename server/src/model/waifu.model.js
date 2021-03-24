@@ -5,7 +5,7 @@ const {
 } = require('../utils/common.utils');
 
 // Base Model Class
-const BaseModel = require('../model/Model');
+const BaseModel = require('./Model');
 
 class WaifuModel extends BaseModel {
 

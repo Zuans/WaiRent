@@ -20,6 +20,7 @@ const homeRoutes = require('./routes/page/homeRoutes');
 const waifuRoutes = require('./routes/page/waifuRoutes');
 const authRoutes = require("./routes/page/authRoutes");
 const profileRoutes = require("./routes/page/profileRoutes");
+const cartRoutes = require("./routes/page/cartRoutes");
 
 app.set('views',path.join(__dirname,'../public/views'));
 app.set('view engine', 'pug');
@@ -56,6 +57,7 @@ app.get('/',homeRoutes);
 app.use('/waifu',waifuRoutes);
 app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
+app.use('/cart',cartRoutes);
 // API middleware
 app.use('/api/wairent/v1',ApiRoutes);
 

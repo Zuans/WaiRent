@@ -162,6 +162,7 @@ class WaifuController {
 
         // Check method GET
             const allWaifu = await waifuModel.find();
+            console.log(allWaifu);
             if (!allWaifu) {
                 return res.render('routes/waifu/waifu-all', {
                     title: 'All Waifu',

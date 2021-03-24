@@ -1,7 +1,7 @@
 const query = require('../db/conn');
 const { multipleColumnSet } = require('../utils/common.utils');
 // Extends Base Model
-const BaseModel = require('../model/Model');
+const BaseModel = require('./Model');
 
 
 

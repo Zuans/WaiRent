@@ -1,21 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-const waifuRoute = require('./waifuRoutes');
-const userRoute = require('./userRoutes');
-const dateTimeRoute = require('./dateTimeRoutes');
-const hairTypeRoute = require('./hairTypeRoutes');
+const cartRoutes = require("./cartRoutes");
+const dateTimeRoutes= require('./dateTimeRoutes');
+const hairTypeRoutes = require('./hairTypeRoutes');
 const hobbyRoutes = require('./hobbyRoutes');
+const userRoutes = require('./userRoutes');
+const waifuRoutes = require('./waifuRoutes');
 
+router.use('/cart',cartRoutes);
 
-router.use('/waifu',waifuRoute);
+router.use('/date-time',dateTimeRoutes);
 
-router.use('/user',userRoute);
-
-router.use('/date-time',dateTimeRoute);
-
-router.use('/hair-type',hairTypeRoute);
+router.use('/hair-type',hairTypeRoutes);
 
 router.use('/hobby',hobbyRoutes);
+
+router.use('/user',userRoutes);
+
+router.use('/waifu',waifuRoutes);
+
+
 
 module.exports = router;

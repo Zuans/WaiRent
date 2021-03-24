@@ -2,7 +2,7 @@
 const query = require('../db/conn');
 
 // BaseModel 
-const BaseModel = require('../model/Model');
+const BaseModel = require('./Model');
 
 
 class HobbyModel extends BaseModel {

@@ -4,8 +4,9 @@ const { multipleColumnSet } = require('../utils/common.utils');
 
 class BaseModel {
 
-    constructor(tableName) {
+    constructor(tableName,selectSQL = "") {
         this.tableName = tableName;
+        this.selectSQL = selectSQL;
     }
 
 

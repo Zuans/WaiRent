@@ -32,7 +32,7 @@ const createHashPassword = async (values) => {
 const checkValidation = (req) => {
     const { errors } = validationResult(req);
     if (errors.length) {
-        throw new HttpException(401, errors);
+        throw new HttpException(401,errors);
     }
     return true;
 }

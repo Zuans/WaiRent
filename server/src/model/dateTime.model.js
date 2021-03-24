@@ -2,7 +2,7 @@
 const query = require('../db/conn');
 const { multipleColumnSet } = require('../utils/common.utils')
 //  BaseModel
-const BaseModel = require('../model/Model');
+const BaseModel = require('./Model');
 
 class DateTimeModel extends BaseModel {
 

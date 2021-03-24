@@ -14,9 +14,8 @@ const auth = (...roles) => {
                 throw new HttpException(401,'Authentication Failed');
             }
     
-            // If owner same as decode token id
-            const ownerAuth  = req.params.id === user.id;
-            if( ownerAuth && roles.length && !roles.includes(user.role)) {
+            // Fix Authentication LOGIC 
+            if( roles.length && !roles.includes(user.role)) {
                 throw new HttpException(401,'Unauthorized');
             }
     
