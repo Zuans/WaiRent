@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createCartSchema, updateCartSchema} = require("../../middleware/validators/cartValidator")
+const { createCartSchema, updateCartSchema, updateTimeSchema} = require("../../middleware/validators/cartValidator")
 const  awaitHandlerFactory = require("../../middleware/awaitHandlerFactory.middleware");
 const CartController = require("../../controller/cart.controller");
 const auth = require("../../middleware/auth.middleware");
@@ -11,9 +11,15 @@ router.get('/user',auth("user","admin"),awaitHandlerFactory(CartController.getBy
 
 router.get('/:cartId/waifu-price',awaitHandlerFactory(CartController.getWaifuPrice));
 
+router.get('/date-time/:id',awaitHandlerFactory(CartController.getDateTime));
+
+router.post('/date-time/:id',updateTimeSchema,awaitHandlerFactory(CartController.updateTime));
+
 router.post('/',createCartSchema,auth("user","admin"),awaitHandlerFactory(CartController.create));
 
 router.patch('/:id',updateCartSchema,auth("user","admin"),awaitHandlerFactory(CartController.update));
+
+router.patch('/duration/:id/:duration',awaitHandlerFactory(CartController.changeDuration));
 
 router.delete('/',auth("user","admin"),awaitHandlerFactory(CartController.deleteAllByUser));
 

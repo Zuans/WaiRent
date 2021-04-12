@@ -10,17 +10,9 @@ const createCartSchema = [
         .withMessage("Duration field is required")
         .isFloat({ min : 1, max : 12 })
         .withMessage("Duration is wrong input or exceed the limit"),
-    check("startDate")
+    check("dateTime")
         .exists()
-        .withMessage("Start Date field is required"),
-    check("endDate")
-        .exists()
-        .withMessage("end date field is required"),
-    check("amount")
-        .exists()
-        .withMessage("Amount field is required")
-        .isFloat({ min :  1})
-        .withMessage("Wrong input type")
+        .withMessage("dateTime input is required")
 ]
 
 
@@ -33,24 +25,19 @@ const updateCartSchema = [
         .withMessage("Duration field is required")
         .isFloat({ min : 1, max : 12 })
         .withMessage("Duration is wrong input or exceed the limit"),
-    check("startDate")
+    check("dateTime")
         .exists()
-        .withMessage("Start Date field is required"),
-    check("endDate")
-        .exists()
-        .withMessage("end date field is required"),
-    check("status")
-        .exists()
-        .withMessage("status input is required"),
-    check("amount")
-        .exists()
-        .withMessage("Amount field is required")
-        .isFloat({ min :  1})
-        .withMessage("Wrong input type")
+        .withMessage("dateTime field is required"),
 ]
 
+const updateTimeSchema =  [
+    check('time')
+        .exists()
+        .withMessage('time field is required!')
+]
 
 module.exports = {
     createCartSchema,
-    updateCartSchema
+    updateCartSchema,
+    updateTimeSchema
 }

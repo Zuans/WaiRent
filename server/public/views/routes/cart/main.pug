@@ -8,6 +8,47 @@ block append scripts
     script( src=`${baseAssets}/js/constant.js`)
 
 block append content
+    section#modal-popup
+        div.modal-wrapper
+            div.close
+                button.close-btn-modal 
+                    i.fas.fa-times.close-icon
+            h1.title-content Change Date
+            div.date-picker-wrapper
+                div.date-picker#custom-date-picker
+                    div.selected-full-date 20/12/1202
+                    div.year
+                        div.selected-year 2012
+                        ul.year-list
+                            li 2021
+                            li 2021
+                            li 2021
+                            li 2021
+                            li 2021
+                            li 2021
+                            li 2021
+                            li 2021
+                    div.month
+                        div.dec-month &lt;
+                        div.selected-month Jaanuary
+                        div.inc-month &gt;
+                    div.days
+                        div.day 1
+                        div.day 1
+                        div.day 1
+                        div.day 1
+                        div.day 1
+                        div.day 1
+                    div.hour
+                        div.hour-time
+                            input( type="number" id="hour-input")
+                            div.separator : 
+                            input( type="number" id="minute-input")
+                        div.hour-part
+                            h3( data-hour-part="AM" data-part-index="0" ).part-item AM
+                            h3( data-hour-part="PM" data-part-index="1" ).part-item PM
+            div.date-submit
+                button Change
     section#main 
         h1.title-content Carts
         .content-wrapper
@@ -19,35 +60,42 @@ block append content
                         div.card-details
                             div.top-detail
                                 h3.waifu-name #{cart["waifu_name"]}
+                            ul.list-tag
+                                li.tag-item #{cart["waifu_hair_type"]}
+                                li.tag-item #{cart["waifu_date_time"]}
+                                li.tag-item #{cart["waifu_hobby"]}
                             div.date-wrapper
-                                h4.hours #{cart["hours"]}
+                                h4.hours 
+                                    span.hour-text #{cart["timeStr"]}
+                                    span( id=`duration-txt-${cart["id"]}`)  - #{cart["duration_hours"]} Hours
                                 div.duration
                                     button.changes-duration.minus-duration( data-id=`${cart.id}`)
                                         i.fas.fa-minus
-                                    input( type="number" class="input-duration" value=`${cart["duration_hours"]}`  name=`duration-${cart.id}` id=`duration-${cart.id}` )
+                                    p.duration-count( id=`duration-${cart.id}` ) #{cart["duration_hours"]}
                                     button.changes-duration.plus-duration( data-id=`${cart.id}`)
                                         i.fas.fa-plus
                                     button.delete-cart( data-cart-id=`${cart.id}`)
                                         i.far.fa-trash-alt
                                 h4.start-date #{cart["fullDate"]}
-                            ul.list-tag
-                                li.tag-item #{cart["waifu_hair_type"]}
-                                li.tag-item #{cart["waifu_date_time"]}
-                                li.tag-item #{cart["waifu_hobby"]}
+                                button.btn-toggle-date-picker( data-cart-id=`${cart.id}`) Change date
                             h3( id=`waifu-price-${cart.id}` class="sub-price"  ) Rp.#{cart["waifu_price"] * cart["duration_hours"] }
                             button.btn-rent-now  Rent now
                         .select-wrapper
                             input.select-cart(type="checkbox" id="select-cart" class="select-cart"  data-id=`${cart["id"]}` value=`cart-id`)
+                .alert-wrapper
+                    .alert-content Cart Successfully
             div.result-wrapper
                 h1.title-header Payment
                 div.order-count-wrapper 
                     h3.title Order Count
-                    h4.order-count 3 Orders
+                    h4.order-count 0 Orders
                 div.total-price-wrapper 
                     h3.title Total Price
-                    h4.total-price Rp.30000
+                    h4.total-price Rp.0
                 button.btn-pay-order Pay now
 block append endScripts
     script( src=`${baseAssets}/js/utils.js`)
+    script( src=`${baseAssets}/js/modal.js`)
     script( src=`${baseAssets}/js/select-cart.js`)
+    script( src=`${baseAssets}/js/date-picker.js`)
     script( src=`${baseAssets}/js/cart.main.js`)

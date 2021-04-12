@@ -48,47 +48,56 @@ class CartModel extends BaseModel {
         userId,
         waifuId,
         duration,
-        startDate,
-        endDate,
+        dateTime,
         totalPrice
     }) {
-        const sql = `INSERT INTO ${this.tableName} (user_id,waifu_id,duration_hours,start_date,end_date,total_price) VALUES(?,?,?,FROM_UNIXTIME(?),FROM_UNIXTIME(?),?)`;
-        const result = await query(sql,[userId,waifuId,duration,startDate,endDate,totalPrice]);
+        const sql = `INSERT INTO ${this.tableName} (user_id,waifu_id,duration_hours,date_time,total_price) VALUES(?,?,?,FROM_UNIXTIME(?),?)`;
+        const result = await query(sql,[userId,waifuId,duration,dateTime,totalPrice]);
         const affectedRows = result.affectedRows;
         return affectedRows;
     }
 
+
+    async updateTimeById(time,id) {
+        const sql =  `UPDATE ${this.tableName} SET date_time =  FROM_UNIXTIME(?) WHERE id = ?`;
+        const result = await query(sql,[time,id]);
+        const affectedRows = result.affectedRows;
+        return affectedRows;
+    }
 
     async updateById({
         userRole,
         userId,
         waifuId,
         duration,
-        startDate,
-        endDate,
-        status,
+        dateTime,
         totalPrice,
         id
     }) {
         let sql = `UPDATE ${this.tableName} SET 
-                        user_id = ?,
                         waifu_id = ?,
                         duration_hours = ?,
-                        start_date =  FROM_UNIXTIME(?),
-                        end_date =  FROM_UNIXTIME(?),
-                        status = ?,
+                        date_time =  FROM_UNIXTIME(?),
                         total_price = ?
                     WHERE id = ?`;
         if(userRole === "admin" ) {
-            const result = await query(sql,[userId,waifuId,duration,startDate,endDate,status,totalPrice,id]);
+            const result = await query(sql,[waifuId,duration,dateTime,totalPrice,id]);
             const affectedRows = result.affectedRows;
             return affectedRows;        
         }
         
         sql += ` AND user_id = ?`;
-        const result = await query(sql,[userId,waifuId,duration,startDate,endDate,status,amount,id,userId]);
+        const result = await query(sql,[waifuId,duration,dateTime,totalPrice,id,userId]);
         const affectedRows = result.affectedRows;
         return affectedRows;        
+    }
+
+
+    async changeDuration(cartId,duration,totalPrice) {
+        const sql = `UPDATE ${this.tableName} SET duration_hours =  ?, total_price = ? WHERE id = ? `;
+        const result = await query(sql,[duration,totalPrice,cartId]);
+        const affectedRows = result.affectedRows;
+        return affectedRows;
     }
 
 

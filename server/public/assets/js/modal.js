@@ -1,0 +1,2 @@
+const modalCloseBtn=document.querySelector(".close-btn-modal"),modalElement=document.querySelector("#modal-popup");function disactiveModal(){modalElement.classList.remove("active")}function activeModal(e,t){if(modalElement.classList.add("active"),t&&modalElement.classList.add(t),"object"==typeof e){const{key:t,value:l}=e;modalElement.setAttribute(`${t}`,l)}}modalCloseBtn.addEventListener("click",disactiveModal);
+//# sourceMappingURL=modal.js.map

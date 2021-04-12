@@ -7,8 +7,11 @@ const hairTypeRoutes = require('./hairTypeRoutes');
 const hobbyRoutes = require('./hobbyRoutes');
 const userRoutes = require('./userRoutes');
 const waifuRoutes = require('./waifuRoutes');
+const orderRoutes = require('./orderRoutes')
 
 router.use('/cart',cartRoutes);
+
+router.use('/order',orderRoutes);
 
 router.use('/date-time',dateTimeRoutes);
 

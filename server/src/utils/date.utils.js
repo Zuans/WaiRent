@@ -26,10 +26,16 @@ const allMonth = [
 
 const setHours = (hour) => {
     if( (hour - 12) > 0 ) {
-        return `${hour - 12} PM`;
+        return  {
+            hour : hour - 12,
+            timePart : "PM"
+        };
     }
     
-    return `${hour} AM`;
+    return {
+        hour : hour,
+        timePart : "AM",
+    };
 }
 
 
